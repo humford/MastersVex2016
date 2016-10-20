@@ -73,6 +73,8 @@ task usercontrol()
   resetMotorEncoder(forkRightFront);
 
 	int forkSpeed = 0;
+	int forkRight = 0;
+	int forkLeft = 0;
 	while (true)
 	{
 		int fork = ( getMotorEncoder(forkLeftFront) - getMotorEncoder(forkRightFront) ) / 2;
@@ -89,10 +91,33 @@ task usercontrol()
       forkSpeed = -127;
     }
 
- 		motor(forkRightFront) = forkSpeed;
- 		motor(forkRightBack) = forkSpeed;
- 		motor(forkLeftFront) = forkSpeed;
- 		motor(forkLeftBack) = forkSpeed;
+    forkRight = forkSpeed
+		forkLeft = forkSpeed
+	
+		if (vexRT[Btn7D] == 1)
+		{
+			forkRight = 127
+		}
+		
+		if (vexRT[Btn7U] == 1)
+		{
+			forkRight = -127
+		}
+		
+		if (vexRT[Btn6D] == 1)
+		{
+			forkLeft = 127
+		}
+		
+		if (vexRT[Btn6U] == 1)
+		{
+			forkLeft = -127
+		}
+    
+ 		motor(forkRightFront) = forkRight;
+ 		motor(forkRightBack) = forkRight;
+ 		motor(forkLeftFront) = forkLeft;
+ 		motor(forkLeftBack) = forkLeft;
 
 		//Right joystick controlls the robots movement forward and backward and turning
 		int rightSide = vexRT[Ch2] - vexRT[Ch1];
