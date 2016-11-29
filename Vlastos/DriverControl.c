@@ -16,6 +16,8 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+float leftTarget = 0, rightTarget = 0;
+
 startTask( Set_Drive );
 
 while (true)
