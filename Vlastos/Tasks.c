@@ -16,51 +16,6 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-////////////////////////////RPM CALCULATION TASK
-task RPMCALC()
-{
-	int count = 0;
-	int status = 0;
-	clearTimer(T1);
-	while(1)
-	{
-		if (status == 0)
-		{
-			count++;
-			status = 1;
-		}
-		if (count == 5)
-		{
-			CurrentSpeed = (1000*5*30)/time1[T1];
-			clearTimer(T1);
-			count = 0;
-		}
-		if (time1[T1] > 500)
-		{
-			CurrentSpeed = 0;
-		}
-	}
-}
-////////////////////////////RPM CONTROL TASK
-task BANGBANG ()
-{
-	int MotorPower = 0;
-	while(1)
-	{
-		///////CONTROL
-		if (CurrentSpeed > TargetSpeed){
-			MotorPower = BasePower;
-		}
-		else if (CurrentSpeed < TargetSpeed){
-			MotorPower = 127;
-		}
-		motor[m1] = MotorPower;
-		motor[m2] = MotorPower;
-		EndTimeSlice(); //OR DELAY 20 MILLI
-		////ERROR CALCULATION//
-		rpmError = abs((TargetSpeed - CurrentSpeed)/10);
-	}
-}
 
 task Set_Drive()
 {
