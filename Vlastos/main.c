@@ -41,12 +41,8 @@
 #define DEBUG 0
 
 //////////////////////////////////GLOBAL VARIABLES
-int CurrentSpeed = 0;    //CURRENT RPM
-int TargetSpeed = 0;     //TARGET RPM
-int BasePower = 30;      //INITIAL MOTOR POWER
 int forkSpeed = 0;
-int rpmError = 0;        //ERROR CALCULATION
-float leftTarget = 0
+float leftTarget = 0;
 float rightTarget = 0;
 
 
