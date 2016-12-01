@@ -41,7 +41,10 @@
 #define DEBUG 0
 
 //////////////////////////////////GLOBAL VARIABLES
-int forkSpeed = 0;
+int forkRightSpeed = 0;
+int forkLeftSpeed = 0;
+int forkRightValue = 0;
+int forkLeftValue = 0;
 float leftTarget = 0;
 float rightTarget = 0;
 
