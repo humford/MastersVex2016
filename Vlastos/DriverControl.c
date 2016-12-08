@@ -45,20 +45,30 @@ while (true)
     forkRightSpeed = forkSpeed
     forkLeftSpeed = forkSpeed
 
-    if (forkRightValue < forkLeftValue)
-    {
-      forkRightSpeed += (forkLeftValue - forkRightValue)
-    }
+    //if (forkRightValue < forkLeftValue)
+    //{
+    //  forkRightSpeed += (forkLeftValue - forkRightValue)
+    //}
 
-    if (forkLeftValue < forkRightValue)
-    {
-      forkLeftSpeed += (forkReftValue - forkLightValue)
-    }
+    //if (forkLeftValue < forkRightValue)
+    //{
+    //  forkLeftSpeed += (forkReftValue - forkLightValue)
+    //}
 
- 		motor(forkRightFront) = forkRightSpeed;
- 		motor(forkRightBack) = forkRightSpeed;
- 		motor(forkLeftFront) = forkLeftSpeed;
- 		motor(forkLeftBack) = forkLeftSpeed;
+		if (SensorValue[dgtl1] == 0)
+    {
+      motor(forkRightFront) = forkRightSpeed;
+ 			motor(forkRightBack) = forkRightSpeed;
+ 			motor(forkLeftFront) = forkLeftSpeed;
+ 			motor(forkLeftBack) = forkLeftSpeed;
+    } else {
+    	if (vexRT[Btn8U] == 1) {
+    		motor(forkRightFront) = -127;
+ 				motor(forkRightBack) = -127;
+ 				motor(forkLeftFront) = -127;
+ 				motor(forkLeftBack) = -127;
+ 			}
+    }
 
 		DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1]);
   }
