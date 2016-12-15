@@ -62,7 +62,15 @@ while (true)
  			motor(forkLeftFront) = forkLeftSpeed;
  			motor(forkLeftBack) = forkLeftSpeed;
     } else {
-    	if (vexRT[Btn8U] == 1) {
+    	if (forkSpeed > 0) 
+      {
+        motor(forkRightFront) = forkRightSpeed;
+        motor(forkRightBack) = forkRightSpeed;
+        motor(forkLeftFront) = forkLeftSpeed;
+        motor(forkLeftBack) = forkLeftSpeed;
+      }
+      if (vexRT[Btn8U] == 1) 
+      {
     		motor(forkRightFront) = -127;
  				motor(forkRightBack) = -127;
  				motor(forkLeftFront) = -127;
