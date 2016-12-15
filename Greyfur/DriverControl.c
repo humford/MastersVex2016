@@ -18,6 +18,8 @@
 
 float leftTarget = 0, rightTarget = 0;
 
+int liftTarget = LIFT_MAX;
+
 startTask( Set_Drive );
 
 while (true)
@@ -55,11 +57,13 @@ while (true)
     //   liftLeftSpeed += (liftReftValue - liftLightValue)
     // }
 
- 		motor(liftRightFront) = liftRightSpeed;
- 		motor(liftLeftFront) = liftLeftSpeed;
+ 		motor(liftRightTop) = liftRightSpeed;
+ 		motor(liftRightBottom) = liftRightSpeed;
+ 		motor(liftLeftTop) = liftLeftSpeed;
+ 		motor(liftLeftBottom) = liftLeftSpeed;
 
 		DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1]);
-    motor(middleLeft) = vexRT[Ch4]
-    motor(middleRight) = vexRT[Ch4]
+    // motor(middleLeft) = vexRT[Ch4]
+    // motor(middleRight) = vexRT[Ch4]
   }
 }
