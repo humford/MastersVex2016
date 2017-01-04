@@ -62,17 +62,15 @@ task Lift_Control()
 	while(true)
 	{
 		last_error = error;
-		error = liftTarget - SensorValue[LiftPos];
+		error = liftTarget - (SensorValue[potLeft] + potRight)/2.0;
 		derivative = (error - last_error)/time_step;
 		power = kp*error + kd * derivative;
 
 		if(power > max_power) power = max_power;
 		if(power < - max_power) power = - max_power;
 
-		motor[liftLeftTop] = power;
-		motor[liftLeftBottom] = power;
-		motor[liftRightBottom] = power;
-		motor[liftRightBottom] = power;
+		motor[liftLeft] = power;
+		motor[liftRight] = power;
 		wait1Msec(time_step);
 	}
 }
