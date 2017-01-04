@@ -19,51 +19,40 @@
 float leftTarget = 0, rightTarget = 0;
 
 int liftTarget = LIFT_MAX;
-
+int liftSpeed = 0;
+int intakeSpeed = 0;
 startTask( Set_Drive );
 
 while (true)
 {
-	// resetMotorEncoder(liftLeftFront);
-  // resetMotorEncoder(liftRightFront);
-
-	while (true)
-	{
-		// liftLeftValue = getMotorEncoder(liftLeftFront);
-    // liftRightValue = getMotorEncoder(liftRightFront);
-
-		liftSpeed = 0;
-
-		if (vexRT[Btn6D] == 1)
-    {
+	if (vexRT[Btn6D] == 1){
+    	liftSpeed = -127;
+    } else if (vexRT[Btn6U] == 1){
     	liftSpeed = 127;
-    }
+   	} else {
+   		liftSpeed = 0;
+   	}
+    
+    motor[liftLeft] = liftSpeed;
+	motor[liftRight] = liftSpeed;
 
-    if (vexRT[Btn6U] == 1)
-    {
-     liftSpeed = -127;
+    if (vexRT[Btn5D] == 1){
+    	intakeSpeed = -127;
+    } else if (vexRT[Btn5U] == 1){
+    	intakeSpeed = 127;
+   	} else {
+   		intakeSpeed = 0;
    	}
 
-    liftRightSpeed = liftSpeed
-    liftLeftSpeed = liftSpeed
+   	motor[intakeLeft] = intakeSpeed;
+   	motor[intakeRight] = intakeSpeed;
 
-    // if (liftRightValue < liftLeftValue)
-    // {
-    //   liftRightSpeed += (liftLeftValue - liftRightValue)
-    // }
+   	motor[leftFront] = vexRT[Ch2] + vexRT[Ch1];
+	motor[leftBack] = vexRT[Ch2] + vexRT[Ch1];
 
-    // if (liftLeftValue < liftRightValue)
-    // {
-    //   liftLeftSpeed += (liftReftValue - liftLightValue)
-    // }
+   	motor[rightFront] = vexRT[Ch2] - vexRT[Ch1];
+	motor[rightBack] = vexRT[Ch2] - vexRT[Ch1];
 
- 		motor(liftRightTop) = liftRightSpeed;
- 		motor(liftRightBottom) = liftRightSpeed;
- 		motor(liftLeftTop) = liftLeftSpeed;
- 		motor(liftLeftBottom) = liftLeftSpeed;
-
-		DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1]);
-    // motor(middleLeft) = vexRT[Ch4]
-    // motor(middleRight) = vexRT[Ch4]
-  }
+	motor[strafeLeft] = vexRT[Ch4];
+	motor[strafeRight] = vexRT[Ch4];
 }
