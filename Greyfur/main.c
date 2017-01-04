@@ -46,6 +46,7 @@ int liftRightValue = 0;
 int liftLeftValue = 0;
 float leftTarget = 0;
 float rightTarget = 0;
+float liftTarget = 0;
 
 
 //////////////////////////////////INCLUDED FILES
