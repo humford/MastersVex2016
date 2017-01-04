@@ -16,31 +16,20 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+#define LIFT_MAX **FUCKING SET THIS VALUE YOU LAZY WHORES**
+#define LIFT_MIN **FUCKING SET THIS VALUE YOU LAZY WHORES**
+
 float leftTarget = 0, rightTarget = 0;
 
-int liftTarget = LIFT_MAX;
-int liftSpeed = 0;
 int intakeSpeed = 0;
+
 startTask( Set_Drive );
 
 while (true)
 {
-	if (vexRT[Btn6D] == 1)
-	{
-    		liftSpeed = -127;
-    	}
-	else if (vexRT[Btn6U] == 1)
-	{
-    		liftSpeed = 127;
-   	} 
-	else 
-	{
-   		liftSpeed = 0;
-   	}
-    
-    motor[liftLeft] = liftSpeed;
-    motor[liftRight] = liftSpeed;
-
+    if(vexRT[Btn6U]) liftTarget = LIFT_MAX;
+    else if(vexRT[Btn6D]) liftTarget = LIFT_MIN;
+	    
     if (vexRT[Btn5D] == 1)
     {
     	intakeSpeed = -127;
