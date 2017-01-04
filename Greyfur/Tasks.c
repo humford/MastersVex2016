@@ -34,20 +34,21 @@ task Set_Drive()
 		if(abs(rightError) <= Power_Step) rightCur = rightTarget;
 		else rightCur += (rightError > 0) ? Power_Step : -Power_Step;
 
-		motor[rightFront] = rightCur;
-		motor[rightMiddle] = rightCur;
-
 		motor[leftFront] = leftCur;
-		motor[leftMiddle] = leftCur;
+		motor[leftBack] = leftCur;
 
+   		motor[rightFront] = rightCur;
+		motor[rightBack] = rightCur;
+		
 		wait1Msec(Time_Step);
 	}
 }
 
-void DrivePower(float left, float right)
+void DrivePower(float left, float right, float strafe)
 {
 	leftTarget = left;
 	rightTarget = right;
+	motor[strafeRight] = strafe;
 }
 
 task Lift_Control()
