@@ -55,8 +55,8 @@ while (true)
      	intakeSpeed = 0;
     }
 
-   motor[intakeLeft] = intakeSpeed;
-   motor[intakeRight] = intakeSpeed;
+    motor[intakeLeft] = intakeSpeed;
+    motor[intakeRight] = intakeSpeed;
 	
-   DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
+    DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 }
