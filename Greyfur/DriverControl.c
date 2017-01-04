@@ -57,12 +57,6 @@ while (true)
 
    	motor[intakeLeft] = intakeSpeed;
    	motor[intakeRight] = intakeSpeed;
-
-   	motor[leftFront] = vexRT[Ch2] + vexRT[Ch1];
-	motor[leftBack] = vexRT[Ch2] + vexRT[Ch1];
-
-   	motor[rightFront] = vexRT[Ch2] - vexRT[Ch1];
-	motor[rightBack] = vexRT[Ch2] - vexRT[Ch1];
-
-	motor[strafeRight] = vexRT[Ch4];
+	
+	DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 }
