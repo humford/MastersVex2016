@@ -25,24 +25,35 @@ startTask( Set_Drive );
 
 while (true)
 {
-	if (vexRT[Btn6D] == 1){
-    	liftSpeed = -127;
-    } else if (vexRT[Btn6U] == 1){
-    	liftSpeed = 127;
-   	} else {
+	if (vexRT[Btn6D] == 1)
+	{
+    		liftSpeed = -127;
+    	}
+	else if (vexRT[Btn6U] == 1)
+	{
+    		liftSpeed = 127;
+   	} 
+	else 
+	{
    		liftSpeed = 0;
    	}
     
     motor[liftLeft] = liftSpeed;
-	motor[liftRight] = liftSpeed;
+    motor[liftRight] = liftSpeed;
 
-    if (vexRT[Btn5D] == 1){
+    if (vexRT[Btn5D] == 1)
+    {
     	intakeSpeed = -127;
-    } else if (vexRT[Btn5U] == 1){
+    }
+	
+    else if (vexRT[Btn5U] == 1)
+    {
     	intakeSpeed = 127;
-   	} else {
-   		intakeSpeed = 0;
-   	}
+    } 
+    else 
+    {
+     	intakeSpeed = 0;
+    }
 
    	motor[intakeLeft] = intakeSpeed;
    	motor[intakeRight] = intakeSpeed;
@@ -53,6 +64,5 @@ while (true)
    	motor[rightFront] = vexRT[Ch2] - vexRT[Ch1];
 	motor[rightBack] = vexRT[Ch2] - vexRT[Ch1];
 
-	motor[strafeLeft] = vexRT[Ch4];
 	motor[strafeRight] = vexRT[Ch4];
 }
