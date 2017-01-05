@@ -16,8 +16,8 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#define LIFT_MAX **FUCKING SET THIS VALUE YOU LAZY WHORES**
-#define LIFT_MIN **FUCKING SET THIS VALUE YOU LAZY WHORES**
+#define LIFT_MAX /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
+#define LIFT_MIN /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
 
 float leftTarget = 0, rightTarget = 0;
 

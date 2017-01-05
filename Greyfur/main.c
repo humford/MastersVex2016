@@ -1,5 +1,6 @@
 #pragma config(Sensor, in1,    potLeft,        sensorPotentiometer)
 #pragma config(Sensor, in2,    potRight,       sensorPotentiometer)
+#pragma config(Sensor, in3,    gyro,           sensorGyro)
 #pragma config(Motor,  port1,           strafeLeft,    tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port2,           leftFront,     tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           leftBack,      tmotorVex393_MC29, openLoop)
