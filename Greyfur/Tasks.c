@@ -15,6 +15,12 @@
 /*    http://www.apache.org/licenses/LICENSE-2.0                              */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+void DrivePower(float left, float right, float strafe)
+{
+	leftTarget = left;
+	rightTarget = right;
+	motor[strafeMotor] = strafe;
+}
 
 task gyro_Drive()
 {
@@ -45,7 +51,7 @@ task gyro_Drive()
 			if(power > max_power) power = max_power;
 			if(power < - max_power) power = - max_power;
 
-			DrivePower(speed - power, speed + power);
+			DrivePower(speed - power, speed + power, 0);
 		}
 		else
 		{
@@ -79,19 +85,13 @@ task Set_Drive()
 		motor[leftFront] = leftCur;
 		motor[leftBack] = leftCur;
 
-   		motor[rightFront] = rightCur;
+   	motor[rightFront] = rightCur;
 		motor[rightBack] = rightCur;
-		
+
 		wait1Msec(Time_Step);
 	}
 }
 
-void DrivePower(float left, float right, float strafe)
-{
-	leftTarget = left;
-	rightTarget = right;
-	motor[strafeRight] = strafe;
-}
 
 task Lift_Control()
 {
@@ -104,7 +104,7 @@ task Lift_Control()
 	while(true)
 	{
 		last_error = error;
-		error = liftTarget - (SensorValue[potLeft] + potRight)/2.0;
+		error = liftTarget - (SensorValue[potLeft])/2.0;
 		derivative = (error - last_error)/time_step;
 		power = kp*error + kd * derivative;
 
