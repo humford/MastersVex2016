@@ -16,36 +16,54 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#define LIFT_MAX /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
-#define LIFT_MIN /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
-
-float leftTarget = 0, rightTarget = 0;
-
-int intakeSpeed = 0;
-
-startTask( Set_Drive );
-
-while (true)
+task usercontrol()
 {
-    if(vexRT[Btn6U]) liftTarget = LIFT_MAX;
-    else if(vexRT[Btn6D]) liftTarget = LIFT_MIN;
-	    
+
+	float leftTarget = 0, rightTarget = 0;
+	int intakeSpeed = 0;
+	int conveySpeed = 0;
+
+	while (true)
+	{
+    if(vexRT[Btn6U])
+    {
+    	liftTarget = LIFT_MAX;
+    }
+    else if(vexRT[Btn6D])
+    {
+    	liftTarget = LIFT_MIN;
+    }
+
     if (vexRT[Btn5D] == 1)
     {
     	intakeSpeed = -127;
     }
-	
     else if (vexRT[Btn5U] == 1)
     {
     	intakeSpeed = 127;
-    } 
-    else 
+    }
+    else
     {
      	intakeSpeed = 0;
+    }
+    
+    if (vexRT[Btn7D] == 1)
+    {
+    	conveySpeed = -127;
+    }
+    else if (vexRT[Btn7U] == 1)
+    {
+    	conveySpeed = 127;
+    }
+    else
+    {
+     	conveySpeed = 0;
     }
 
     motor[intakeLeft] = intakeSpeed;
     motor[intakeRight] = intakeSpeed;
-	
+    motor[conveyMotor] = conveySpeed;
+
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
+	}
 }
