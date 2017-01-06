@@ -92,19 +92,20 @@ task Set_Drive()
 	}
 }
 
+	float kp = 1, kd = 1;
+	float error = 0, last_error = 0, derivative = 0, power = 0;
+	float time_step = 100;
 
 task Lift_Control()
 {
-	float kp = 0.1, kd = 10;
-	float error = 0, last_error = 0, derivative = 0, power = 0;
-	float time_step = 100;
+
 
 	float max_power = 127;
 
 	while(true)
 	{
 		last_error = error;
-		error = liftTarget - (SensorValue[potLeft])/2.0;
+		error = liftTarget - (SensorValue[potRight]);
 		derivative = (error - last_error)/time_step;
 		power = kp*error + kd * derivative;
 

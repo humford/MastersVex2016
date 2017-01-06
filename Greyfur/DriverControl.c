@@ -46,7 +46,7 @@ task usercontrol()
     {
      	intakeSpeed = 0;
     }
-    
+
     if (vexRT[Btn7D] == 1)
     {
     	conveySpeed = -127;
