@@ -34,7 +34,8 @@ task usercontrol()
     {
     	// liftTarget = LIFT_MIN;
         liftSpeed = -127
-    } else {
+    } 
+    else {
         liftSpeed = 0
     }
 
@@ -68,10 +69,10 @@ task usercontrol()
     motor[intakeRight] = intakeSpeed;
     motor[conveyMotor] = conveySpeed;
 
-    liftRightSpeed = liftSpeed
-    liftLeftSpeed = liftSpeed
-    motor[liftRight] = liftRightSpeed
-    motor[liftLeft] = liftLeftSpeed
+    // liftRightSpeed = liftSpeed
+    // liftLeftSpeed = liftSpeed
+    // motor[liftRight] = liftRightSpeed
+    // motor[liftLeft] = liftLeftSpeed
 
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 	}

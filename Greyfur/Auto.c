@@ -19,6 +19,11 @@
 task autonomous()
 {
 	gyroTurningActive = true;
+
+	liftRightSpeed = liftSpeed
+    liftLeftSpeed = liftSpeed
+    motor[liftRight] = liftRightSpeed
+    motor[liftLeft] = liftLeftSpeed
 	
 	gyroTurningActive = false;
 }
