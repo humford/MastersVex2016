@@ -34,6 +34,8 @@ task usercontrol()
     {
     	// liftTarget = LIFT_MIN;
         liftSpeed = -127
+    } else {
+        liftSpeed = 0
     }
 
     if (vexRT[Btn5D] == 1)
