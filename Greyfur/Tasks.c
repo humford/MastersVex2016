@@ -112,6 +112,10 @@ task Lift_Control()
 		if(power > max_power) power = max_power;
 		if(power < - max_power) power = - max_power;
 
+		if(vexRT[Btn8R]) {
+			power = 0;
+		}
+
 		motor[liftLeft] = power;
 		motor[liftRight] = power;
 		
