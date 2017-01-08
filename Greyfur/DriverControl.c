@@ -22,6 +22,7 @@ task usercontrol()
 	float leftTarget = 0, rightTarget = 0;
 	int intakeSpeed = 0;
 	int conveySpeed = 0;
+    driverControl = true;
 
 	while (true)
 	{
@@ -33,7 +34,9 @@ task usercontrol()
     else if(vexRT[Btn6D])
     {
     	liftTarget = LIFT_MIN;
-    } else if(!vexRT[Btn6U] && !vexRT[Btn6D]) {
+    } 
+    else if(!vexRT[Btn6U] && !vexRT[Btn6D]) 
+    {
         liftTarget = LIFT_MIN;
     }
 

@@ -97,6 +97,7 @@ float kp = 1, kd = 1;
 float error = 0, last_error = 0, derivative = 0, power = 0;
 float oldTarget = 0;
 float time_step = 100;
+bool driverControl = false;
 
 task Lift_Control()
 {
@@ -112,8 +113,17 @@ task Lift_Control()
 		if(power > max_power) power = max_power;
 		if(power < - max_power) power = - max_power;
 
-		if(vexRT[Btn8R]) {
-			power = 0;
+		if(driverControl) 
+		{
+			if(vexRT[Btn8R]) 
+			{
+				power = 0;
+			}
+			if(vexRT[Btn8L]  && abs(error) < 250 && abs(liftTarget - LIFT_MIN) < 250) 
+			{
+				power = -100;
+			}
+
 		}
 
 		motor[liftLeft] = power;
