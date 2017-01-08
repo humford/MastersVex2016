@@ -22,31 +22,19 @@ task usercontrol()
 	float leftTarget = 0, rightTarget = 0;
 	int intakeSpeed = 0;
 	int conveySpeed = 0;
-    float liftPosition = 0;
 
 	while (true)
 	{
 
     if(vexRT[Btn6U])
     {
-    	// liftTarget = LIFT_MAX;
-        liftSpeed = 127
+    	liftTarget = LIFT_MAX;
     }
     else if(vexRT[Btn6D])
     {
-    	// liftTarget = LIFT_MIN;
-        liftSpeed = -127
+    	liftTarget = LIFT_MIN;
     } else if(!vexRT[Btn6U] && !vexRT[Btn6D]) {
-        liftSpeed = 0;
-    }
-
-    if(vexRT[Btn8D])
-    {
-        if(SensorValue[potRight] < LIFT_MAX) {
-            liftSpeed = 127
-        } else if (SensorValue[potRight] > LIFT_MAX) {
-            liftSpeed = -127
-        }
+        liftTarget = LIFT_MIN;
     }
 
     if (vexRT[Btn5D] == 1)
@@ -79,10 +67,10 @@ task usercontrol()
     motor[intakeRight] = intakeSpeed;
     motor[conveyMotor] = conveySpeed;
 
-    liftRightSpeed = liftSpeed
-    liftLeftSpeed = liftSpeed
-    motor[liftRight] = liftRightSpeed
-    motor[liftLeft] = liftLeftSpeed
+    // liftRightSpeed = liftSpeed
+    // liftLeftSpeed = liftSpeed
+    // motor[liftRight] = liftRightSpeed
+    // motor[liftLeft] = liftLeftSpeed
 
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 	}

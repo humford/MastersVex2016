@@ -160,7 +160,7 @@ void pre_auton()
 	displayLCDString(0, 0, "Gyro Calibrated!");
 	wait1Msec(1000);
 
-	// startTask(Lift_Control);
+	startTask(Lift_Control);
 	startTask(Set_Drive);
 	startTask(gyro_Drive);
 }
