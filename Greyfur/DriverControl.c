@@ -26,9 +26,7 @@ task usercontrol()
 
 	while (true)
 	{
-    
-    liftPosition = SensorValue[potRight];
-    
+
     if(vexRT[Btn6U])
     {
     	// liftTarget = LIFT_MAX;
@@ -39,10 +37,15 @@ task usercontrol()
     	// liftTarget = LIFT_MIN;
         liftSpeed = -127
     } else if(!vexRT[Btn6U] && !vexRT[Btn6D]) {
-        if(SensorValue[potRight] < liftPosition) {
-            liftSpeed = 80
-        } else if (SensorValue[potRight] > liftPosition) {
-            liftSpeed = -80
+        liftSpeed = 0;
+    }
+
+    if(vexRT[Btn8D])
+    {
+        if(SensorValue[potRight] < LIFT_MAX) {
+            liftSpeed = 127
+        } else if (SensorValue[potRight] > LIFT_MAX) {
+            liftSpeed = -127
         }
     }
 
