@@ -20,8 +20,5 @@ task autonomous()
 {
 	gyroTurningActive = true;
 	
-	if(autonomous_side == BLUE) blue_auto();
-	else if(autonomous_side == RED) red_auto();
-	
 	gyroTurningActive = false;
 }
