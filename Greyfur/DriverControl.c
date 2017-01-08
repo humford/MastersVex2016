@@ -76,10 +76,10 @@ task usercontrol()
     motor[intakeRight] = intakeSpeed;
     motor[conveyMotor] = conveySpeed;
 
-    // liftRightSpeed = liftSpeed
-    // liftLeftSpeed = liftSpeed
-    // motor[liftRight] = liftRightSpeed
-    // motor[liftLeft] = liftLeftSpeed
+    liftRightSpeed = liftSpeed
+    liftLeftSpeed = liftSpeed
+    motor[liftRight] = liftRightSpeed
+    motor[liftLeft] = liftLeftSpeed
 
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 	}
