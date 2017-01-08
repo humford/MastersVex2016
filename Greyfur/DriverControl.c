@@ -27,11 +27,13 @@ task usercontrol()
 	{
     if(vexRT[Btn6U])
     {
-    	liftTarget = LIFT_MAX;
+    	// liftTarget = LIFT_MAX;
+        liftSpeed = 127
     }
     else if(vexRT[Btn6D])
     {
-    	liftTarget = LIFT_MIN;
+    	// liftTarget = LIFT_MIN;
+        liftSpeed = 127
     }
 
     if (vexRT[Btn5D] == 1)
@@ -63,6 +65,11 @@ task usercontrol()
     motor[intakeLeft] = intakeSpeed;
     motor[intakeRight] = intakeSpeed;
     motor[conveyMotor] = conveySpeed;
+
+    liftRightSpeed = liftSpeed
+    liftLeftSpeed = liftSpeed
+    motor[liftRight] = liftRightSpeed
+    motor[liftLeft] = liftLeftSpeed
 
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 	}

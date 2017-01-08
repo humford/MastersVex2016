@@ -98,8 +98,6 @@ task Set_Drive()
 
 task Lift_Control()
 {
-
-
 	float max_power = 127;
 
 	while(true)
