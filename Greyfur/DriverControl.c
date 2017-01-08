@@ -22,6 +22,7 @@ task usercontrol()
 	float leftTarget = 0, rightTarget = 0;
 	int intakeSpeed = 0;
 	int conveySpeed = 0;
+    float liftPosition = 0;
 
 	while (true)
 	{
@@ -29,14 +30,20 @@ task usercontrol()
     {
     	// liftTarget = LIFT_MAX;
         liftSpeed = 127
+        liftPosition = SensorValue[potRight];
     }
     else if(vexRT[Btn6D])
     {
     	// liftTarget = LIFT_MIN;
         liftSpeed = -127
+        liftPosition = SensorValue[potRight];
     } 
     else {
-        liftSpeed = 0
+        if(SensorValue[potRight] < liftPosition) {
+            liftSpeed = 80
+        } else if (SensorValue[potRight] > liftPosition) {
+            liftSpeed = -80
+        }
     }
 
     if (vexRT[Btn5D] == 1)

@@ -115,7 +115,7 @@ task Lift_Control()
 		motor[liftLeft] = power;
 		motor[liftRight] = power;
 		
-		oldTarget = liftTarget
+		oldTarget = liftTarget;
 
 		wait1Msec(time_step);
 	}
