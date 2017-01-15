@@ -22,20 +22,22 @@ task usercontrol()
 	float leftTarget = 0, rightTarget = 0;
 	int intakeSpeed = 0;
 	int conveySpeed = 0;
+    driverControl = true;
 
 	while (true)
 	{
+
     if(vexRT[Btn6U])
     {
-    	// liftTarget = LIFT_MAX;
-        liftSpeed = 127
+    	liftTarget = LIFT_MAX;
     }
     else if(vexRT[Btn6D])
     {
-    	// liftTarget = LIFT_MIN;
-        liftSpeed = -127
-    } else {
-        liftSpeed = 0
+    	liftTarget = LIFT_MIN;
+    } 
+    else if(!vexRT[Btn6U] && !vexRT[Btn6D]) 
+    {
+        liftTarget = LIFT_MIN;
     }
 
     if (vexRT[Btn5D] == 1)
@@ -68,10 +70,10 @@ task usercontrol()
     motor[intakeRight] = intakeSpeed;
     motor[conveyMotor] = conveySpeed;
 
-    liftRightSpeed = liftSpeed
-    liftLeftSpeed = liftSpeed
-    motor[liftRight] = liftRightSpeed
-    motor[liftLeft] = liftLeftSpeed
+    // liftRightSpeed = liftSpeed
+    // liftLeftSpeed = liftSpeed
+    // motor[liftRight] = liftRightSpeed
+    // motor[liftLeft] = liftLeftSpeed
 
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1], vexRT[Ch4]);
 	}

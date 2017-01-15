@@ -46,8 +46,8 @@
 #define RIGHT_BUTTON 4
 
 
-#define LIFT_MAX 1700 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
-#define LIFT_MIN 570 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
+#define LIFT_MAX 1500 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
+#define LIFT_MIN 550 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
 
 //////////////////////////////////GLOBAL VARIABLES
 int liftSpeed = 0;
@@ -160,13 +160,12 @@ void pre_auton()
 	displayLCDString(0, 0, "Gyro Calibrated!");
 	wait1Msec(1000);
 
-	// startTask(Lift_Control);
+	startTask(Lift_Control);
 	startTask(Set_Drive);
 	startTask(gyro_Drive);
 }
 
 ///////////////////////////////////////////////////BEGIN AUTONOMOUS
-
 #include "Auto.c"
 
 ///////////////////////////////////////////////////BEGIN DRIVER CONTROL

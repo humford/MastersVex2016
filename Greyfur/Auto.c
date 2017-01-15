@@ -19,6 +19,12 @@
 task autonomous()
 {
 	gyroTurningActive = true;
-	
+	liftTarget = LIFT_MAX;
+	wait1Msec(500);
+	speed = 127;
+	wait1Msec(750);
+	motor[intakeLeft] = 127;
+	wait1Msec(250);
+	speed = 0 
 	gyroTurningActive = false;
 }

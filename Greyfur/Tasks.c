@@ -15,6 +15,7 @@
 /*    http://www.apache.org/licenses/LICENSE-2.0                              */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+
 void DrivePower(float left, float right, float strafe)
 {
 	leftTarget = left;
@@ -85,16 +86,18 @@ task Set_Drive()
 		motor[leftFront] = leftCur;
 		motor[leftBack] = leftCur;
 
-   	motor[rightFront] = rightCur;
+   		motor[rightFront] = rightCur;
 		motor[rightBack] = rightCur;
 
 		wait1Msec(Time_Step);
 	}
 }
 
-	float kp = 1, kd = 1;
-	float error = 0, last_error = 0, derivative = 0, power = 0;
-	float time_step = 100;
+float kp = 1, kd = 1;
+float error = 0, last_error = 0, derivative = 0, power = 0;
+float oldTarget = 0;
+float time_step = 100;
+bool driverControl = false;
 
 task Lift_Control()
 {
@@ -105,13 +108,29 @@ task Lift_Control()
 		last_error = error;
 		error = liftTarget - (SensorValue[potRight]);
 		derivative = (error - last_error)/time_step;
-		power = kp*error + kd * derivative;
+		power = kp * error + kd * derivative;
 
 		if(power > max_power) power = max_power;
 		if(power < - max_power) power = - max_power;
 
+		if(driverControl) 
+		{
+			if(vexRT[Btn8R]) 
+			{
+				power = 0;
+			}
+			if(vexRT[Btn8L]  && abs(error) < 250 && abs(liftTarget - LIFT_MIN) < 250) 
+			{
+				power = -100;
+			}
+
+		}
+
 		motor[liftLeft] = power;
 		motor[liftRight] = power;
+		
+		oldTarget = liftTarget;
+
 		wait1Msec(time_step);
 	}
 }
