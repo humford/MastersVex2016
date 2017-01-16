@@ -61,6 +61,8 @@ task usercontrol()
     liftLeftSpeed = liftSpeed;
     motor[rightLift] = liftRightSpeed;
     motor[leftLift] = liftLeftSpeed;
+    motor[rightLift2] = liftRightSpeed;
+    motor[leftLift2] = liftLeftSpeed;
 
     DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1]);
 	}

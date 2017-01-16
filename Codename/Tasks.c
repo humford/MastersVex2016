@@ -83,8 +83,9 @@ task Set_Drive()
 		else rightCur += (rightError > 0) ? Power_Step : -Power_Step;
 
 		motor[leftDrive] = leftCur;
-
+		motor[leftDrive2] = leftCur;
    	motor[rightDrive] = rightCur;
+   	motor[rightDrive2] = rightCur;
 
 		wait1Msec(Time_Step);
 	}
@@ -125,6 +126,8 @@ task Lift_Control()
 
 		motor[rightLift] = power;
 		motor[leftLift] = power;
+		motor[rightLift2] = power;
+		motor[leftLift2] = power;
 
 		oldTarget = liftTarget;
 
