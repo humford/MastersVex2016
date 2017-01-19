@@ -51,6 +51,12 @@
 #define CENTER_BUTTON 2
 #define RIGHT_BUTTON 4
 
+#define DRIVE_WHEEL_CIR 4 //circumfrence of drive wheel in inches
+#define VAL_PER_ROTATION 360 
+
+#define DIST_TO_CUBE_Y 27
+#define DIST_TO_CUBE_X 17
+#define DIST_TO_FENCE_FROM_CUBE_Y 23
 
 #define LIFT_MAX 1500 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
 #define LIFT_MIN 550 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
@@ -74,6 +80,7 @@ float liftTarget = 0;
 bool gyroTurningActive = false;
 float gyroTarget = 0, speed = 0;
 
+bool encoderDrivingActive = false;
 
 //////////////////////////////////INCLUDED FILES
 
@@ -87,7 +94,7 @@ void pre_auton()
 {
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
   // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
-  bStopTasksBetweenModes = false;
+  	bStopTasksBetweenModes = false;
 
   	//DISPLAY BATTERY LEVEL
 

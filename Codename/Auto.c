@@ -19,6 +19,37 @@
 task autonomous()
 {
 	gyroTurningActive = true;
+	encoderDrivingActive = true;
 
+	MoveForDistance(DIST_TO_CUBE_Y);
+	wait1Msec(500);
+
+	gyroTarget = -900;
+	wait1Msec(2000);
+
+	MoveForDistance(DIST_TO_CUBE_X);
+	wait1Msec(500);
+
+	//GRAB CUBE
+
+	//LIFT CUBE SLIGHTLY
+
+	gyroTarget = 1800;
+	wait1Msec(2000);
+
+	MoveForDistance(DIST_TO_CUBE_X);
+	wait1Msec(500);
+
+	gyroTarget = -900;
+	wait1Msec(2000);
+
+	MoveForDistance(DIST_TO_FENCE_FROM_CUBE_Y);
+	wait1Msec(500);
+
+	//LIFT CUBE
+
+	//LET GO OF CUBE
+
+	encoderDrivingActive = false;
 	gyroTurningActive = false;
 }
