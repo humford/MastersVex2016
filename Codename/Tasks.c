@@ -57,7 +57,7 @@ task gyro_Drive()
 		if(gyroTurningActive)
 		{
 			last_error = error;
-			error = gyroTarget - SensorValue[gyro];
+			error = gyroTarget - SensorValue[in1];
 			derivative = (error - last_error)/time_step;
 
 			if(abs(error) < integral_window)integral += error * time_step;

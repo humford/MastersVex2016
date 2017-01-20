@@ -1,7 +1,5 @@
 #pragma config(UART_Usage, UART1, uartVEXLCD, baudRate19200, IOPins, None, None)
 #pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
-#pragma config(Sensor, in1,    gyro,           sensorGyro)
-#pragma config(Sensor, in2,    accel,          sensorAccelerometer)
 #pragma config(Sensor, dgtl1,  rightDriveEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  leftDriveEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  rightLiftEncoder, sensorQuadEncoder)
@@ -52,7 +50,7 @@
 #define RIGHT_BUTTON 4
 
 #define DRIVE_WHEEL_CIR 4 //circumfrence of drive wheel in inches
-#define VAL_PER_ROTATION 360 
+#define VAL_PER_ROTATION 360
 
 #define DIST_TO_CUBE_Y 27
 #define DIST_TO_CUBE_X 17
@@ -146,7 +144,7 @@ void pre_auton()
 	clearLCDLine(0);
 	clearLCDLine(1);
 	displayLCDString(0, 0, "Calibrating Gyro");
-	SensorType[gyro] = sensorNone;
+	SensorType[in1] = sensorNone;
 	wait1Msec(250);
 	displayLCDString(1, 2, "*");
 	wait1Msec(250);
@@ -155,7 +153,7 @@ void pre_auton()
 	displayLCDString(1, 2, "***");
 	wait1Msec(250);
 	displayLCDString(1, 2, "****");
-	SensorType[gyro] = sensorGyro;
+	SensorType[in1] = sensorGyro;
 	wait1Msec(250);
 	displayLCDString(1, 2, "*****");
 	wait1Msec(250);
