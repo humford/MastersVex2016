@@ -4,7 +4,7 @@
 /*    Author:     Henry Williams                                              */
 /*    Created:    14 Jan 2017                                                 */
 /*                                                                            */
-/*    Copyright (c) Masters of Robotics 2017, All Rights Reserved             */
+/*    Copyright (c) Masters of Robotics 2016, All Rights Reserved             */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
@@ -16,9 +16,65 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-task autonomous()
+task usercontrol()
 {
-	gyroTurningActive = true;
+  driverControl = true;
+  encoderDrivingActive = true;
+
+	while (true)
+	{
+
+    if(vexRT[Btn6U])
+    {
+    	//liftTarget = LIFT_MAX;
+    	liftSpeed = -127;
+    }
+    else if(vexRT[Btn6D])
+    {
+    	//liftTarget = LIFT_MIN;
+    	liftSpeed = 127;
+    }
+    else if(!vexRT[Btn6U] && !vexRT[Btn6D])
+    {
+    	//liftTarget = LIFT_MIN;
+    	liftSpeed = 0;
+    }
+
+    if (vexRT[Btn5U] == 1)
+    {
+    	grabberSpeed = 127;
+    }
+    else if (vexRT[Btn5D] == 1)
+    {
+    	grabberSpeed = -127;
+    }
+    else
+    {
+     	grabberSpeed = 0;
+    }
+
+    grabberRightSpeed = grabberSpeed;
+    grabberLeftSpeed = grabberSpeed;
+    motor[rightGrabber] = grabberRightSpeed;
+    motor[leftGrabber] = grabberLeftSpeed;
+
+    liftRightSpeed = liftSpeed;
+    liftLeftSpeed = liftSpeed;
+    motor[rightLift] = liftRightSpeed;
+    motor[leftLift] = liftLeftSpeed;
+    motor[rightLift2] = liftRightSpeed;
+    motor[leftLift2] = liftLeftSpeed;
+
+    DrivePower(vexRT[Ch3] + vexRT[Ch1], vexRT[Ch3] - vexRT[Ch1]);
+
+    if(vexRT[Btn7L])
+    {
+    	MoveForDistance(DIST_TO_CUBE_Y);
+    }
+
+    if(vexRT[Btn7R])
+    {
+    	gyroTurningActive = true;
 	encoderDrivingActive = true;
 
 	MoveForDistance(DIST_TO_CUBE_Y);
@@ -65,4 +121,6 @@ task autonomous()
 
 	encoderDrivingActive = false;
 	gyroTurningActive = false;
+    }
+	}
 }

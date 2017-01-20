@@ -49,12 +49,14 @@
 #define CENTER_BUTTON 2
 #define RIGHT_BUTTON 4
 
-#define DRIVE_WHEEL_CIR 4 //circumfrence of drive wheel in inches
+#define DRIVE_WHEEL_CIR 12.56637 //circumfrence of drive wheel in inches
 #define VAL_PER_ROTATION 360
 
-#define DIST_TO_CUBE_Y 27
-#define DIST_TO_CUBE_X 17
-#define DIST_TO_FENCE_FROM_CUBE_Y 23
+#define DIST_TO_CUBE_Y 737
+#define DIST_TO_CUBE_X 466
+#define DIST_TO_FENCE_FROM_CUBE_Y -840
+#define CLAW_CUBE_GRAB -865
+#define CLAW_CUBE_DROP -660
 
 #define LIFT_MAX 1500 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
 #define LIFT_MIN 550 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
@@ -74,7 +76,6 @@ float leftTarget = 0;
 float rightTarget = 0;
 float liftTarget = 0;
 
-
 bool gyroTurningActive = false;
 float gyroTarget = 0, speed = 0;
 
@@ -87,14 +88,13 @@ bool encoderDrivingActive = false;
 
 ///////////////////////////////////////////////////BEGIN PREAUTONOMOUS
 
-
 void pre_auton()
 {
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
   // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
-  	bStopTasksBetweenModes = false;
+  bStopTasksBetweenModes = false;
 
-  	//DISPLAY BATTERY LEVEL
+  //DISPLAY BATTERY LEVEL
 
 	bLCDBacklight = true;                                    // Turn on LCD Backlight
 	string mainBattery;
@@ -139,39 +139,16 @@ void pre_auton()
 		wait1Msec(100);
 	}*/
 
-    //CALIBRATE GYRO
+  //CALIBRATE GYRO
 
-	clearLCDLine(0);
-	clearLCDLine(1);
-	displayLCDString(0, 0, "Calibrating Gyro");
-	SensorType[in1] = sensorNone;
-	wait1Msec(250);
-	displayLCDString(1, 2, "*");
-	wait1Msec(250);
-	displayLCDString(1, 2, "**");
-	wait1Msec(250);
-	displayLCDString(1, 2, "***");
-	wait1Msec(250);
-	displayLCDString(1, 2, "****");
-	SensorType[in1] = sensorGyro;
-	wait1Msec(250);
-	displayLCDString(1, 2, "*****");
-	wait1Msec(250);
-	displayLCDString(1, 2, "******");
-	wait1Msec(250);
-	displayLCDString(1, 2, "*******");
-	wait1Msec(250);
-	displayLCDString(1, 2, "********");
-	wait1Msec(250);
-	displayLCDString(1, 2, "*********");
-	wait1Msec(250);
-	displayLCDString(1, 2, "**********");
-	wait1Msec(250);
-	displayLCDString(1, 2, "***********");
-	wait1Msec(250);
-	displayLCDString(1, 2, "************");
+	//Completely clear out any previous sensor readings by setting the port to "sensorNone"
+  SensorType[in8] = sensorNone;
+  wait1Msec(1000);
+  //Reconfigure Analog Port 2 as a Gyro sensor and allow time for ROBOTC to calibrate it
+  SensorType[in8] = sensorGyro;
+  wait1Msec(2000);
 
-	clearLCDLine(0);
+  clearLCDLine(0);
 	clearLCDLine(1);
 	displayLCDString(0, 0, "Gyro Calibrated!");
 	wait1Msec(1000);

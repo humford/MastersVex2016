@@ -19,6 +19,7 @@
 task usercontrol()
 {
   driverControl = true;
+  encoderDrivingActive = true;
 
 	while (true)
 	{
@@ -66,60 +67,60 @@ task usercontrol()
 
     DrivePower(vexRT[Ch3] + vexRT[Ch1], vexRT[Ch3] - vexRT[Ch1]);
 
-    if(vexRT[Btn7D])
+    if(vexRT[Btn7L])
     {
-    gyroTurningActive = true;
-    encoderDrivingActive = true;
-
-    MoveForDistance(DIST_TO_CUBE_Y);
-    wait1Msec(500);
-
-    gyroTarget = -950;
-    wait1Msec(2000);
-
-    MoveForDistance(DIST_TO_CUBE_X);
-    wait1Msec(500);
-
-    //GRAB CUBE
-    motor[rightGrabber] = -100;
-    motor[leftGrabber] = -100;
-    wait1Msec(1500);
-    motor[rightGrabber] = 0;
-    motor[leftGrabber] = 0;
-
-    //LIFT CUBE SLIGHTLY
-    motor[rightLift] = -50;
-    motor[leftLift] = -50;
-
-    gyroTarget = 1900;
-    wait1Msec(2000);
-
-    MoveForDistance(DIST_TO_CUBE_X);
-    wait1Msec(500);
-
-    gyroTarget = -950;
-    wait1Msec(2000);
-
-    MoveForDistance(DIST_TO_FENCE_FROM_CUBE_Y);
-    wait1Msec(500);
-
-    //LIFT CUBE
-    motor[rightLift] = -127;
-    motor[leftLift] = -127;
-    wait1Msec(1500);
-    motor[rightLift] = 0;
-    motor[leftLift] = 0;
-
-    //LET GO OF CUBE
-    motor[rightGrabber] = 100;
-    motor[leftGrabber] = 100;
-    wait1Msec(1500);
-    motor[rightGrabber] = 0;
-    motor[leftGrabber] = 0;
-
-    encoderDrivingActive = false;
-    gyroTurningActive = false;
+    	MoveForDistance(DIST_TO_CUBE_Y);
     }
 
+    if(vexRT[Btn7R])
+    {
+    	gyroTurningActive = true;
+	encoderDrivingActive = true;
+
+	MoveForDistance(DIST_TO_CUBE_Y);
+
+	gyroTarget = -950;
+	wait1Msec(2000);
+
+	MoveForDistance(DIST_TO_CUBE_X);
+
+	//GRAB CUBE
+	motor[rightGrabber] = -100;
+	motor[leftGrabber] = -100;
+	wait1Msec(1500);
+	motor[rightGrabber] = 0;
+	motor[leftGrabber] = 0;
+
+	//LIFT CUBE SLIGHTLY
+	motor[rightLift] = -50;
+	motor[leftLift] = -50;
+
+	gyroTarget = 1900;
+	wait1Msec(2000);
+
+	MoveForDistance(DIST_TO_CUBE_X);
+
+	gyroTarget = -950;
+	wait1Msec(2000);
+
+	MoveForDistance(DIST_TO_FENCE_FROM_CUBE_Y);
+
+	//LIFT CUBE
+	motor[rightLift] = -127;
+	motor[leftLift] = -127;
+	wait1Msec(1500);
+	motor[rightLift] = 0;
+	motor[leftLift] = 0;
+
+	//LET GO OF CUBE
+	motor[rightGrabber] = 100;
+	motor[leftGrabber] = 100;
+	wait1Msec(1500);
+	motor[rightGrabber] = 0;
+	motor[leftGrabber] = 0;
+
+	encoderDrivingActive = false;
+	gyroTurningActive = false;
+    }
 	}
 }

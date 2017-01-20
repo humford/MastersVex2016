@@ -24,22 +24,48 @@ void DrivePower(float left, float right)
 
 void MoveForDistance(int dist)
 {
-    int startRight = -SensorValue[rightDriveEncoder];
+  int startRight = -SensorValue[rightDriveEncoder];
 	int startLeft = SensorValue[leftDriveEncoder];
 
-	int progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+	//int progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+	int progress = abs(SensorValue[leftDriveEncoder] - startLeft);
 
-	int goal = startRight + VAL_PER_ROTATION * (dist / DRIVE_WHEEL_CIR);
+	//int goal = startLeft + (360 * (dist / 4));
+	int goal = startLeft + dist;
 
 	if(encoderDrivingActive)
 	{
+		DrivePower(30, 30);
 		while(progress < goal) {
-			DrivePower(100, 100);
-			progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
-			wait1Msec(50);
+			//progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+			progress = abs(SensorValue[leftDriveEncoder] - startLeft);
 		}
 		DrivePower(0, 0);
 	}
+}
+
+bool holdLiftActive = false;
+
+task hold_Lift()
+{
+	while(true)
+	{
+		if(holdLiftActive)
+		{
+
+		}
+	}
+}
+
+task hold_Grabber() {
+	while(true)
+	{
+		if(holdLiftActive)
+		{
+
+		}
+	}
+
 }
 
 task gyro_Drive()
@@ -57,7 +83,7 @@ task gyro_Drive()
 		if(gyroTurningActive)
 		{
 			last_error = error;
-			error = gyroTarget - SensorValue[in1];
+			error = gyroTarget - SensorValue[in8];
 			derivative = (error - last_error)/time_step;
 
 			if(abs(error) < integral_window)integral += error * time_step;
@@ -124,7 +150,7 @@ task Lift_Control()
 	while(true)
 	{
 		last_error = error;
-		sensor_val = (SensorValue[rightLift] + SensorValue[leftLift]) / 2
+		int sensor_val = (SensorValue[rightLift] + SensorValue[leftLift]) / 2;
 		error = liftTarget - sensor_val;
 		derivative = (error - last_error)/time_step;
 		power = kp * error + kd * derivative;
