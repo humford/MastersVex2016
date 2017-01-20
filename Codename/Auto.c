@@ -24,23 +24,33 @@ task autonomous()
 	MoveForDistance(DIST_TO_CUBE_Y);
 	wait1Msec(500);
 
-	gyroTarget = -900;
+	gyroTarget = -950;
 	wait1Msec(2000);
 
 	MoveForDistance(DIST_TO_CUBE_X);
 	wait1Msec(500);
 
 	//GRAB CUBE
+	motor[rightGrabber] = -100;
+	motor[leftGrabber] = -100;
+	wait1Msec(1500);
+	motor[rightGrabber] = 0;
+	motor[leftGrabber] = 0;
 
 	//LIFT CUBE SLIGHTLY
+	motor[rightLift] = ;
+	motor[leftLift] = ;
+	wait1Msec(1500);
+	motor[rightLift] = 0;
+	motor[leftLift] = 0;
 
-	gyroTarget = 1800;
+	gyroTarget = 1900;
 	wait1Msec(2000);
 
 	MoveForDistance(DIST_TO_CUBE_X);
 	wait1Msec(500);
 
-	gyroTarget = -900;
+	gyroTarget = -950;
 	wait1Msec(2000);
 
 	MoveForDistance(DIST_TO_FENCE_FROM_CUBE_Y);
@@ -49,6 +59,11 @@ task autonomous()
 	//LIFT CUBE
 
 	//LET GO OF CUBE
+	motor[rightGrabber] = 100;
+	motor[leftGrabber] = 100;
+	wait1Msec(1500);
+	motor[rightGrabber] = 0;
+	motor[leftGrabber] = 0;
 
 	encoderDrivingActive = false;
 	gyroTurningActive = false;

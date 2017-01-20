@@ -26,12 +26,12 @@ task usercontrol()
     if(vexRT[Btn6U])
     {
     	//liftTarget = LIFT_MAX;
-    	liftSpeed = 127;
+    	liftSpeed = -127;
     }
     else if(vexRT[Btn6D])
     {
     	//liftTarget = LIFT_MIN;
-    	liftSpeed = -127;
+    	liftSpeed = 127;
     }
     else if(!vexRT[Btn6U] && !vexRT[Btn6D])
     {
@@ -39,11 +39,11 @@ task usercontrol()
     	liftSpeed = 0;
     }
 
-    if (vexRT[Btn5D] == 1)
+    if (vexRT[Btn5U] == 1)
     {
     	grabberSpeed = 127;
     }
-    else if (vexRT[Btn5U] == 1)
+    else if (vexRT[Btn5D] == 1)
     {
     	grabberSpeed = -127;
     }
