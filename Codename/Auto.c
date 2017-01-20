@@ -38,11 +38,8 @@ task autonomous()
 	motor[leftGrabber] = 0;
 
 	//LIFT CUBE SLIGHTLY
-	motor[rightLift] = ;
-	motor[leftLift] = ;
-	wait1Msec(1500);
-	motor[rightLift] = 0;
-	motor[leftLift] = 0;
+	motor[rightLift] = -50;
+	motor[leftLift] = -50;
 
 	gyroTarget = 1900;
 	wait1Msec(2000);
@@ -57,6 +54,11 @@ task autonomous()
 	wait1Msec(500);
 
 	//LIFT CUBE
+	motor[rightLift] = -127;
+	motor[leftLift] = -127;
+	wait1Msec(1500);
+	motor[rightLift] = 0;
+	motor[leftLift] = 0;
 
 	//LET GO OF CUBE
 	motor[rightGrabber] = 100;
