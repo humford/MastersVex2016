@@ -19,19 +19,19 @@
 task usercontrol()
 {
   driverControl = true;
+  encoderDrivingActive = true;
 
 	while (true)
 	{
-
     if(vexRT[Btn6U])
     {
     	//liftTarget = LIFT_MAX;
-    	liftSpeed = 127;
+    	liftSpeed = -127;
     }
     else if(vexRT[Btn6D])
     {
     	//liftTarget = LIFT_MIN;
-    	liftSpeed = -127;
+    	liftSpeed = 127;
     }
     else if(!vexRT[Btn6U] && !vexRT[Btn6D])
     {
@@ -39,11 +39,11 @@ task usercontrol()
     	liftSpeed = 0;
     }
 
-    if (vexRT[Btn5D] == 1)
+    if (vexRT[Btn5U] == 1)
     {
     	grabberSpeed = 127;
     }
-    else if (vexRT[Btn5U] == 1)
+    else if (vexRT[Btn5D] == 1)
     {
     	grabberSpeed = -127;
     }
@@ -61,7 +61,8 @@ task usercontrol()
     liftLeftSpeed = liftSpeed;
     motor[rightLift] = liftRightSpeed;
     motor[leftLift] = liftLeftSpeed;
+    motor[rightLift2] = liftRightSpeed;
+    motor[leftLift2] = liftLeftSpeed;
 
-    DrivePower(vexRT[Ch2] + vexRT[Ch1], vexRT[Ch2] - vexRT[Ch1]);
-	}
+    DrivePower(vexRT[Ch3] + vexRT[Ch1], vexRT[Ch3] - vexRT[Ch1]);
 }

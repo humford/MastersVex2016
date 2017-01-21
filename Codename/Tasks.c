@@ -22,6 +22,52 @@ void DrivePower(float left, float right)
 	rightTarget = right;
 }
 
+void MoveForDistance(int dist)
+{
+  int startRight = -SensorValue[rightDriveEncoder];
+	int startLeft = SensorValue[leftDriveEncoder];
+
+	//int progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+	int progress = abs(SensorValue[leftDriveEncoder] - startLeft);
+
+	//int goal = startLeft + (360 * (dist / 4));
+	int goal = startLeft + dist;
+
+	if(encoderDrivingActive)
+	{
+		DrivePower(30, 30);
+		while(progress < goal) {
+			//progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+			progress = abs(SensorValue[leftDriveEncoder] - startLeft);
+		}
+		DrivePower(0, 0);
+	}
+}
+
+bool holdLiftActive = false;
+
+task hold_Lift()
+{
+	while(true)
+	{
+		if(holdLiftActive)
+		{
+
+		}
+	}
+}
+
+task hold_Grabber() {
+	while(true)
+	{
+		if(holdLiftActive)
+		{
+
+		}
+	}
+
+}
+
 task gyro_Drive()
 {
 	float kp = 0.25, ki = 0.0, kd = 35;
@@ -37,7 +83,7 @@ task gyro_Drive()
 		if(gyroTurningActive)
 		{
 			last_error = error;
-			error = gyroTarget - SensorValue[gyro];
+			error = gyroTarget - SensorValue[in8];
 			derivative = (error - last_error)/time_step;
 
 			if(abs(error) < integral_window)integral += error * time_step;
@@ -83,8 +129,9 @@ task Set_Drive()
 		else rightCur += (rightError > 0) ? Power_Step : -Power_Step;
 
 		motor[leftDrive] = leftCur;
-
-   	motor[rightDrive] = rightCur;
+		motor[leftDrive2] = leftCur;
+   		motor[rightDrive] = rightCur;
+   		motor[rightDrive2] = rightCur;
 
 		wait1Msec(Time_Step);
 	}
@@ -103,7 +150,8 @@ task Lift_Control()
 	while(true)
 	{
 		last_error = error;
-		error = liftTarget - (SensorValue[rightLift]);
+		int sensor_val = (SensorValue[rightLift] + SensorValue[leftLift]) / 2;
+		error = liftTarget - sensor_val;
 		derivative = (error - last_error)/time_step;
 		power = kp * error + kd * derivative;
 
@@ -125,6 +173,8 @@ task Lift_Control()
 
 		motor[rightLift] = power;
 		motor[leftLift] = power;
+		motor[rightLift2] = power;
+		motor[leftLift2] = power;
 
 		oldTarget = liftTarget;
 

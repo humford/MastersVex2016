@@ -1,20 +1,18 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:     Auto.c                                                      */
-/*    Author:     Henry Williams                                              */
-/*    Created:    14 Jan 2017                                                 */
-/*                                                                            */
-/*    Copyright (c) Masters of Robotics 2017, All Rights Reserved             */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Licensed under the Apache License, Version 2.0 (the "License");         */
-/*    you may not use this file except in compliance with the License.        */
-/*    You may obtain a copy of the License at                                 */
-/*                                                                            */
-/*    http://www.apache.org/licenses/LICENSE-2.0                              */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
+#pragma config(Motor,  port1,           rightDrive2,   tmotorVex393TurboSpeed_HBridge, openLoop, reversed, driveRight, encoderPort, dgtl1)
+#pragma config(Motor,  port2,           rightDrive,    tmotorVex393TurboSpeed_MC29, openLoop, reversed, driveRight, encoderPort, dgtl1)
+#pragma config(Motor,  port3,           leftDrive,     tmotorVex393TurboSpeed_MC29, openLoop, driveLeft, encoderPort, dgtl3)
+#pragma config(Motor,  port4,           rightLift,     tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl5)
+#pragma config(Motor,  port5,           leftLift,      tmotorVex393_MC29, openLoop, encoderPort, dgtl7)
+#pragma config(Motor,  port6,           rightGrabber,  tmotorVex393_MC29, openLoop, encoderPort, dgtl11)
+#pragma config(Motor,  port7,           leftGrabber,   tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port8,           rightLift2,    tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port9,           leftLift2,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port10,          leftDrive2,    tmotorVex393TurboSpeed_HBridge, openLoop, driveLeft, encoderPort, dgtl3)
+#pragma config(Sensor, dgtl3,  leftDriveEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl5,  rightLiftEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl7,  leftLiftEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl11, grabberEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl1,  rightDriveEncoder, sensorQuadEncoder)
 
 void move(int speed, int dir){
 // dir == 1 forward
@@ -24,7 +22,6 @@ void move(int speed, int dir){
 	motor[rightDrive] = speed*dir;
 	motor[rightDrive2] = speed*dir;
 }
-
 void resetDrive (){
 	motor[leftDrive] = 0;
 	motor[leftDrive2] = 0;
@@ -32,7 +29,6 @@ void resetDrive (){
 	motor[rightDrive2] = 0;
 
 }
-
 void resetEnc() {
 	SensorValue[leftDriveEncoder] = 0;
 	SensorValue[rightDriveEncoder] = 0;
@@ -40,7 +36,6 @@ void resetEnc() {
 	SensorValue[leftLiftEncoder] = 0;
 
 }
-
 void turn(int speed, int dir){
 // dir == 1 CCW
 // dir == -1 CW
@@ -50,7 +45,6 @@ void turn(int speed, int dir){
 	motor[rightDrive2] = speed*dir;
 
 }
-
 void liftComp(int target){
 	int correction = target - SensorValue[leftliftEncoder];
 	if (SensorValue[leftLiftEncoder] < target) {
@@ -66,7 +60,6 @@ void liftComp(int target){
 		motor[rightLift2] = correction*correction;
 	}
 }
-
 bool liftSimple(int target){
 	int correction = target - SensorValue[leftliftEncoder];
 	if (SensorValue[leftLiftEncoder] < target) {
@@ -85,7 +78,6 @@ bool liftSimple(int target){
 	}
 	return false;
 }
-
 int grabber(int action, int type){
 	int target;
 	//Pick up
@@ -105,7 +97,6 @@ int grabber(int action, int type){
 	}
 	return target
 }
-
 void checkGrip(int type){
 	int target;
 	//type == 0 Stars
@@ -126,8 +117,17 @@ void checkGrip(int type){
 	}
 }
 
-task autonomous()
+task main()
 {
+
+	SensorType[in8] = sensorNone;
+  wait1Msec(1000);
+  //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
+  SensorType[in8] = sensorGyro;
+  wait1Msec(2000);
+	SensorValue[in8] = 0;
+	wait1Msec(1000);
+
 	//Forward 27 inches
 	while (SensorValue[leftDriveEncoder] <= 780){
 		move(60, 1);
@@ -220,4 +220,5 @@ task autonomous()
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}
+
 }
