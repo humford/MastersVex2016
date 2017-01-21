@@ -169,7 +169,7 @@ task main()
 	resetEnc();
 	wait1Msec(300);
 
-	int turnTarget = (abs(SensorValue[in8])+450);
+	int turnTarget = (abs(SensorValue[in8])+350);
 	//CCW Turn 90 Degrees
 	while (abs(SensorValue[in8]) < turnTarget){
 		turn(70, 1);
