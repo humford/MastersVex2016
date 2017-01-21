@@ -1,5 +1,6 @@
 #pragma config(UART_Usage, UART1, uartVEXLCD, baudRate19200, IOPins, None, None)
 #pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
+#pragma config(Sensor, in8,    gyro,           sensorGyro)
 #pragma config(Sensor, dgtl1,  rightDriveEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  leftDriveEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  rightLiftEncoder, sensorQuadEncoder)
@@ -148,10 +149,7 @@ void pre_auton()
   SensorType[in8] = sensorGyro;
   wait1Msec(2000);
 
-  clearLCDLine(0);
-	clearLCDLine(1);
-	displayLCDString(0, 0, "Gyro Calibrated!");
-	wait1Msec(1000);
+
 
 	//startTask(Lift_Control);
 	startTask(Set_Drive);

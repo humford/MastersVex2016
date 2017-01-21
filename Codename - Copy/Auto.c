@@ -18,7 +18,34 @@
 
 task autonomous()
 {
-	gyroTurningActive = true;
+	while (SensorValue[abs(rightDriveEncoder)] < 780){
+		motor[leftDrive] = 50;
+		motor[leftDrive2] = 50;
+		motor[rightDrive] = 50;
+		motor[rightDrive2] = 50;
+	}
+	motor[leftDrive] = 0;
+	motor[leftDrive2] = 0;
+	motor[rightDrive] = 0;
+	motor[rightDrive2] = 0;
+
+	/*while (SensorValue[in8] < 900){
+		motor[leftDrive] = 50;
+		motor[leftDrive2] = 50;
+		motor[rightDrive] = 50;
+		motor[rightDrive2] = 50;
+	}
+	motor[leftDrive] = 0;
+	motor[leftDrive2] = 0;
+	motor[rightDrive] = 0;
+	motor[rightDrive2] = 0;
+	*/
+
+
+
+
+
+	/*gyroTurningActive = true;
 	encoderDrivingActive = true;
 
 	MoveForDistance(DIST_TO_CUBE_Y);
@@ -64,5 +91,5 @@ task autonomous()
 	motor[leftGrabber] = 0;
 
 	encoderDrivingActive = false;
-	gyroTurningActive = false;
+	gyroTurningActive = false;*/
 }
