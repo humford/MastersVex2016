@@ -23,7 +23,6 @@ task usercontrol()
 
 	while (true)
 	{
-
     if(vexRT[Btn6U])
     {
     	//liftTarget = LIFT_MAX;
@@ -66,5 +65,4 @@ task usercontrol()
     motor[leftLift2] = liftLeftSpeed;
 
     DrivePower(vexRT[Ch3] + vexRT[Ch1], vexRT[Ch3] - vexRT[Ch1]);
-	}
 }

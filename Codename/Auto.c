@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:     DriverControl.c                                             */
+/*    Module:     Auto.c                                                      */
 /*    Author:     Henry Williams                                              */
 /*    Created:    14 Jan 2017                                                 */
 /*                                                                            */
