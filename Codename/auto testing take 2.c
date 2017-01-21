@@ -34,7 +34,7 @@ void resetEnc() {
 	SensorValue[rightDriveEncoder] = 0;
 	SensorValue[leftLiftEncoder] = 0;
 	SensorValue[leftLiftEncoder] = 0;
-	SensorValue[grabberEncoder] = 0;
+
 }
 void turn(int speed, int dir){
 // dir == 1 CCW
@@ -88,12 +88,12 @@ int grabber(int action, int type){
 		}
 		//type == 1 Cube
 		if (type == 1){
-			target = -870;
+			target = -800;
 		}
 	}
 	//Drop
 	if (action == 1){
-		target = -550
+		target = -450
 	}
 	return target
 }
@@ -130,12 +130,12 @@ task main()
 
 	//Forward 27 inches
 	while (SensorValue[leftDriveEncoder] <= 780){
-		move(60, -1);
+		move(60, 1);
 	}
 	resetDrive();
 
 	//CCW Turn 90 Degrees
-	while (abs(SensorValue[in8]) < 700){
+	while (abs(SensorValue[in8]) < 650){
 		turn(60, 1);
 	}
 	resetDrive();
@@ -156,6 +156,10 @@ task main()
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
 
+	resetDrive();
+	resetEnc();
+	wait1Msec(300);
+
 	//Backwards 17 inches
 	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
 		move(60, -1);
@@ -165,29 +169,54 @@ task main()
 	resetEnc();
 	wait1Msec(300);
 
+	int turnTarget = (abs(SensorValue[in8])+450);
 	//CCW Turn 90 Degrees
-	while (abs(SensorValue[in8]) < 600){
-		turn(60, 1);
+	while (abs(SensorValue[in8]) < turnTarget){
+		turn(70, 1);
 		checkGrip(1);
+		if (leftLiftEncoder < 20){
+			motor[leftLift] = -90;
+			motor[leftLift2] = -90;
+			motor[rightLift] = -90;
+			motor[rightLift2] = -90;
+		} else {
+			motor[leftLift] = 0;
+			motor[leftLift2] = 0;
+			motor[rightLift] = 0;
+			motor[rightLift2] = 0;
+		}
 	}
 	resetDrive();
 	resetEnc();
-	wait1Msec(300);
 
+	wait1Msec(400);
+	/*
 	//Backwards into fence
 	while (abs(SensorValue[leftDriveEncoder]) <= 400) {
 		move(60, -1);
 		checkGrip(1);
-	}
+	}*/
 
-	while (/*SensorValue[leftLiftEncoder] < 195*/ liftSimple(195) == false) {
-	//	liftComp(195);
+	while (/*SensorValue[leftLiftEncoder] < 195*/ liftSimple(145) == false) {
+	//	liftComp(10);
+		move(60, -1);
 		checkGrip(1);
 	}
 
+
 	//Drop cube
-	while (SensorValue[grabberEncoder] < grabber(1, 1) {
-		liftComp(195);
+	while (SensorValue[grabberEncoder] < -550) {
+		if (leftLiftEncoder < 145){
+			motor[leftLift] = -90;
+			motor[leftLift2] = -90;
+			motor[rightLift] = -90;
+			motor[rightLift2] = -90;
+		} else {
+			motor[leftLift] = 90;
+			motor[leftLift2] = 90;
+			motor[rightLift] = 90;
+			motor[rightLift2] = 90;
+		}
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}

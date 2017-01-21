@@ -1,5 +1,3 @@
-#pragma config(UART_Usage, UART1, uartVEXLCD, baudRate19200, IOPins, None, None)
-#pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(Sensor, dgtl1,  rightDriveEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  leftDriveEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  rightLiftEncoder, sensorQuadEncoder)
@@ -96,23 +94,7 @@ void pre_auton()
 
   //DISPLAY BATTERY LEVEL
 
-	bLCDBacklight = true;                                    // Turn on LCD Backlight
-	string mainBattery;
-
-	for(int i = 0; i < 10; i ++)                                                        // An infinite loop to keep the program running until you terminate it
-	{
-		clearLCDLine(0);                                            // Clear line 1 (0) of the LCD
-		clearLCDLine(1);                                            // Clear line 2 (1) of the LCD
-
-		//Display the Primary Robot battery voltage
-		displayLCDString(0, 0, "Primary: ");
-		sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V'); //Build the value to be displayed
-		displayNextLCDString(mainBattery);
-
-		//Short delay for the LCD refresh rate
-		//while(vrDisabled && nLCDButtons != CENTER_BUTTON);
-		wait1Msec(100);
-	}
+	//bLCDBacklight = true;                                    // Turn on LCD Backlight
 
   	//SELECT MODE
   	/*
@@ -141,16 +123,12 @@ void pre_auton()
 
   //CALIBRATE GYRO
 
-	//Completely clear out any previous sensor readings by setting the port to "sensorNone"
-  SensorType[in8] = sensorNone;
+		SensorType[in8] = sensorNone;
   wait1Msec(1000);
-  //Reconfigure Analog Port 2 as a Gyro sensor and allow time for ROBOTC to calibrate it
+  //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
   SensorType[in8] = sensorGyro;
   wait1Msec(2000);
-
-  clearLCDLine(0);
-	clearLCDLine(1);
-	displayLCDString(0, 0, "Gyro Calibrated!");
+	SensorValue[in8] = 0;
 	wait1Msec(1000);
 
 	//startTask(Lift_Control);
