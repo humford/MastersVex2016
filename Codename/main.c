@@ -56,8 +56,8 @@
 #define CLAW_CUBE_GRAB -865
 #define CLAW_CUBE_DROP -660
 
-#define LIFT_MAX 1500 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
-#define LIFT_MIN 550 /**FUCKING SET THIS VALUE YOU LAZY WHORES**/
+#define LIFT_MAX 1500
+#define LIFT_MIN 550
 
 //////////////////////////////////GLOBAL VARIABLES
 int liftRightSpeed = 0;
@@ -100,7 +100,7 @@ void pre_auton()
   	/*
 	while(vrDisabled && nLCDButtons != CENTER_BUTTON)
 	{
-		clearLCDLine(0); //heil hitler
+		clearLCDLine(0);
 		clearLCDLine(1);
 		switch(autonomous_side)
 		{
@@ -123,7 +123,7 @@ void pre_auton()
 
   //CALIBRATE GYRO
 
-		SensorType[in8] = sensorNone;
+	SensorType[in8] = sensorNone;
   wait1Msec(1000);
   //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
   SensorType[in8] = sensorGyro;

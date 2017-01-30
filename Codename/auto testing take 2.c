@@ -169,7 +169,7 @@ task main()
 	resetEnc();
 	wait1Msec(300);
 
-	int turnTarget = (abs(SensorValue[in8])+350);
+	int turnTarget = (abs(SensorValue[in8])+300);
 	//CCW Turn 90 Degrees
 	while (abs(SensorValue[in8]) < turnTarget){
 		turn(70, 1);
@@ -199,13 +199,13 @@ task main()
 
 	while (/*SensorValue[leftLiftEncoder] < 195*/ liftSimple(145) == false) {
 	//	liftComp(10);
-		move(60, -1);
+		move(40, -1);
 		checkGrip(1);
 	}
 
 
 	//Drop cube
-	while (SensorValue[grabberEncoder] < -550) {
+	while (SensorValue[grabberEncoder] < -700) {
 		if (leftLiftEncoder < 145){
 			motor[leftLift] = -90;
 			motor[leftLift2] = -90;
@@ -220,5 +220,23 @@ task main()
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}
-
+	motor[leftGrabber] = 50;
+	motor[rightGrabber] = 50;
+	motor[leftLift] = 90;
+	motor[leftLift2] = 90;
+	motor[rightLift] = 90;
+	motor[rightLift2] = 90;
+	wait1Msec(200);
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+	motor[leftLift] = 0;
+	motor[leftLift2] = 0;
+	motor[rightLift] = 0;
+	motor[rightLift2] = 0;
+	move(60, -1);
+	wait1Msec(500);
+	motor[leftDrive] = 0;
+	motor[leftDrive2] = 0;
+	motor[rightDrive] = 0;
+	motor[rightDrive2] = 0;
 }
