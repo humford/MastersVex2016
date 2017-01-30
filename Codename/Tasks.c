@@ -130,8 +130,8 @@ task Set_Drive()
 
 		motor[leftDrive] = leftCur;
 		motor[leftDrive2] = leftCur;
-   	motor[rightDrive] = rightCur;
-   	motor[rightDrive2] = rightCur;
+   		motor[rightDrive] = rightCur;
+   		motor[rightDrive2] = rightCur;
 
 		wait1Msec(Time_Step);
 	}

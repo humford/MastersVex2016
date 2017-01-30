@@ -64,10 +64,10 @@ task usercontrol()
     motor[rightLift2] = liftRightSpeed;
     motor[leftLift2] = liftLeftSpeed;
 
-    /*motor[leftDrive] = vexRT[Ch3] - vexRT[Ch1];
-		motor[leftDrive2] = vexRT[Ch3] - vexRT[Ch1];
+    motor[leftDrive] = vexRT[Ch3] - vexRT[Ch1];
+    motor[leftDrive2] = vexRT[Ch3] - vexRT[Ch1];
    	motor[rightDrive] = vexRT[Ch3] + vexRT[Ch1];
-   	motor[rightDrive2] = vexRT[Ch3] + vexRT[Ch1];*/
-    DrivePower( (vexRT[Ch3] + vexRT[Ch1]), (vexRT[Ch3] - vexRT[Ch1]) );
+   	motor[rightDrive2] = vexRT[Ch3] + vexRT[Ch1];
+    // DrivePower( (vexRT[Ch3] + vexRT[Ch1]), (vexRT[Ch3] - vexRT[Ch1]) );
    }
 }
