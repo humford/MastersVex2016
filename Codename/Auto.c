@@ -128,8 +128,11 @@ void checkGrip(int type){
 
 task autonomous()
 {
-		//Forward 27 inches
-	while (SensorValue[leftDriveEncoder] <= 780){
+	int timeOut = 0;
+
+	//Forward 27 inches
+	// 780 * (627.2 / 360) = 1359
+	while (SensorValue[leftDriveEncoder] <= 1359){
 		move(60, 1);
 	}
 	resetDrive();
@@ -143,7 +146,8 @@ task autonomous()
 	wait1Msec(300);
 
 	//Forward 17 inches
-	while (SensorValue[leftDriveEncoder] <= 580){
+	// 580  * (627.2 / 360) = 1010
+	while (SensorValue[leftDriveEncoder] <= 1010){
 		move(60, 1);
 	}
 	resetDrive();
@@ -161,7 +165,7 @@ task autonomous()
 	wait1Msec(300);
 
 	//Backwards 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
+	while (abs(SensorValue[leftDriveEncoder]) <= 1010) {
 		move(60, -1);
 		checkGrip(1);
 	}
