@@ -134,16 +134,29 @@ void checkGrip(int type){
 
 task main()
 {
+	//Open claw, lift, and turn all together
 
+	//Move forward into 3 stars and grab
 
+	//Move back and turn left
 
+	//Orient to 180 degrees with Gyro
 
+	//Move backwards towards fence and throw stars
 
+	//Forward to pick up driver loads x number of times
+	//4 Stars, 2 Cubes
 
+	//From fence orient to gyro 90 degrees
 
+	//Move forward and pick up 3 stars
 
+	//Orient to gyro 180 degrees
 
+	//Move backwards to fence and throw stars
 
+	//Move forward grab cube
 
+	//Move backwards to fence and throw cube
 
 }
