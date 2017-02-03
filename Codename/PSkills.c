@@ -45,9 +45,12 @@ void resetEnc() {
 	SensorValue[leftLiftEncoder] = 0;
 }
 
-void turn(int speed, int dir){
+void turn(int speed, int target){
 // dir == 1 CCW
 // dir == -1 CW
+
+	int dir = (target - SensorValue[in8])/abs(target - SensorValue[in8])
+
 	motor[leftDrive] = speed*(-dir);
 	motor[leftDrive2] = speed*(-dir);
 	motor[rightDrive] = speed*dir;
@@ -134,29 +137,73 @@ void checkGrip(int type){
 
 task main()
 {
-	//Open claw, lift, and turn all together
 
+
+
+
+
+
+	/*
+	//Open claw, lift, and turn (90 Degrees) all together
+	while (SensorValue[in8] <= 580){
+		turn(80, 900);
+	}
 	//Move forward into 3 stars and grab
-
-	//Move back and turn left
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
+	while (SensorValue[grabberEncoder] > grabber(0, 0)) {
+			motor[leftGrabber] = 127;
+			motor[rightGrabber] = 127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+	//Move back (modified back, slowly easing left) and turn left
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+		motor[leftDrive] = 70;
+		motor[leftDrive2] = 70;
+	}
+	while (SensorValue[in8] <= 580){
+		turn(80, 0);
+	}
 	//Orient to 180 degrees with Gyro
-
+	while (SensorValue[in8] <= 580){
+		turn(80, 1800);
+	}
 	//Move backwards towards fence and throw stars
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+	}
 	//Forward to pick up driver loads x number of times
 	//4 Stars, 2 Cubes
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
 	//From fence orient to gyro 90 degrees
-
+	while (SensorValue[in8] <= 580){
+		turn(80, 900);
+	}
 	//Move forward and pick up 3 stars
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
 	//Orient to gyro 180 degrees
-
+	//int gyroDir = (1800 - SensorValue[in8])/abs(1800 - SensorValue[in8]);
+	while (SensorValue[in8] <= 580){
+		turn(80, 1800);
+	}
 	//Move backwards to fence and throw stars
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+	}
 	//Move forward grab cube
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
 	//Move backwards to fence and throw cube
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+	}
+	*/
 }

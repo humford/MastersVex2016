@@ -16,6 +16,15 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+task timeout(){
+	while(true){
+		if (time1(T1) > 1100){
+			stopTask(autonomous);
+		}
+		wait1Msec(20);
+	}
+}
+
 void DrivePower(float left, float right)
 {
 	leftTarget = left;
@@ -67,7 +76,7 @@ task hold_Grabber() {
 	}
 
 }
-
+int gyroscope = SensorValue[in8];
 task gyro_Drive()
 {
 	float kp = 0.25, ki = 0.0, kd = 35;
@@ -80,6 +89,7 @@ task gyro_Drive()
 
 	while(true)
 	{
+		gyroscope = SensorValue[in8];
 		if(gyroTurningActive)
 		{
 			last_error = error;
@@ -110,9 +120,12 @@ task gyro_Drive()
 		wait1Msec(time_step);
 	}
 }
-
+int leftEnc;
+int rightEnc;
 task Set_Drive()
 {
+	leftEnc = SensorValue[leftDriveEncoder];
+	rightEnc = SensorValue[rightDriveEncoder];
 	int leftCur = 0, rightCur = 0, leftError = 0, rightError = 0;
 	//PLAY WITH VALEUS TILL THEY WORK
 	int Time_Step = 20;

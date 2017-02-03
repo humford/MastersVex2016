@@ -85,7 +85,8 @@ bool liftSimple(int target){
 	}
 	return false;
 }
-
+//Action 0 = pick up
+//Action 1 = drop
 int grabber(int action, int type){
 	int target;
 	//Pick up
@@ -126,13 +127,13 @@ void checkGrip(int type){
 	}
 }
 
+
+
 task autonomous()
 {
-	int timeOut = 0;
-
 	//Forward 27 inches
 	// 780 * (627.2 / 360) = 1359
-	while (SensorValue[leftDriveEncoder] <= 1359){
+	while (SensorValue[leftDriveEncoder] <= 780){
 		move(60, 1);
 	}
 	resetDrive();
@@ -147,7 +148,7 @@ task autonomous()
 
 	//Forward 17 inches
 	// 580  * (627.2 / 360) = 1010
-	while (SensorValue[leftDriveEncoder] <= 1010){
+	while (SensorValue[leftDriveEncoder] <= 580){
 		move(60, 1);
 	}
 	resetDrive();
@@ -165,7 +166,7 @@ task autonomous()
 	wait1Msec(300);
 
 	//Backwards 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 1010) {
+	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
 		move(60, -1);
 		checkGrip(1);
 	}
@@ -178,7 +179,7 @@ task autonomous()
 	while (abs(SensorValue[in8]) < turnTarget){
 		turn(70, 1);
 		checkGrip(1);
-		if (leftLiftEncoder < 20){
+		if (SensorValue[leftLiftEncoder] < 20){
 			motor[leftLift] = -90;
 			motor[leftLift2] = -90;
 			motor[rightLift] = -90;
@@ -210,7 +211,7 @@ task autonomous()
 
 	//Drop cube
 	while (SensorValue[grabberEncoder] < -700) {
-		if (leftLiftEncoder < 145){
+		if (SensorValue[leftLiftEncoder] < 145){
 			motor[leftLift] = -90;
 			motor[leftLift2] = -90;
 			motor[rightLift] = -90;
