@@ -299,7 +299,7 @@ task main()
 //End of Autonomous
 
 	int i = 0;
-	int driverLoad = 0;
+	int driverLoad = 1;
 //	bool oriented = false;
 	while(i < 1){ //Driver Load loop
 		/*
@@ -319,7 +319,7 @@ task main()
 	targetCounter = 0;*/
 	resetDrive();
 	resetEnc();
-	wait1Msec(400);
+	wait1Msec(500);
 
 	//Change distance
 	while (SensorValue[leftDriveEncoder] <= 830){
@@ -384,7 +384,7 @@ task main()
 	motor[rightLift2] = 30;
 	resetDrive();
 	resetGrabber();
-	wait1Msec(3000);
+	wait1Msec(2000);
 	motor[leftLift] = 0;
 	motor[leftLift2] = 0;
 	motor[rightLift] = 0;
