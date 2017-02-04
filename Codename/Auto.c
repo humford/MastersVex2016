@@ -30,7 +30,6 @@ void resetDrive (){
 	motor[leftDrive2] = 0;
 	motor[rightDrive] = 0;
 	motor[rightDrive2] = 0;
-
 }
 
 void resetEnc() {
@@ -38,12 +37,23 @@ void resetEnc() {
 	SensorValue[rightDriveEncoder] = 0;
 	SensorValue[leftLiftEncoder] = 0;
 	SensorValue[leftLiftEncoder] = 0;
-
 }
 
 void turn(int speed, int dir){
 // dir == 1 CCW
 // dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
+
+}
+void orient(int speed, int target){
+// dir == 1 CCW
+// dir == -1 CW
+
+	int dir = (target - SensorValue[in8])/abs(target - SensorValue[in8])
+
 	motor[leftDrive] = speed*(-dir);
 	motor[leftDrive2] = speed*(-dir);
 	motor[rightDrive] = speed*dir;
@@ -85,8 +95,7 @@ bool liftSimple(int target){
 	}
 	return false;
 }
-//Action 0 = pick up
-//Action 1 = drop
+
 int grabber(int action, int type){
 	int target;
 	//Pick up
@@ -126,13 +135,36 @@ void checkGrip(int type){
 		motor[rightGrabber] = 0;
 	}
 }
+void resetGrabber(){
+	while(SensorValue[grabberEncoder] < -600) {
+		motor[leftGrabber] = -40;
+		motor[rightGrabber] = -40;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
 
+
+}
+void brake(int speed, int dir){
+// dir == 1 CCW
+// dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
+
+}
+void resetLiftEnc(){
+	SensorValue[leftLiftEncoder] = 0;
+	SensorValue[rightLiftEncoder] = 0;
+}
 
 
 task autonomous()
 {
-	//Forward 27 inches
-	// 780 * (627.2 / 360) = 1359
+	clearTimer(T1);
+	startTask(timeout);
+
 	while (SensorValue[leftDriveEncoder] <= 780){
 		move(60, 1);
 	}
@@ -142,6 +174,7 @@ task autonomous()
 	while (abs(SensorValue[in8]) < 600){
 		turn(60, 1);
 	}
+	brake(30, -1);
 	resetDrive();
 	resetEnc();
 	wait1Msec(300);
@@ -174,7 +207,7 @@ task autonomous()
 	resetEnc();
 	wait1Msec(300);
 
-	int turnTarget = (abs(SensorValue[in8])+300);
+	int turnTarget = (abs(SensorValue[in8])+250);
 	//CCW Turn 90 Degrees
 	while (abs(SensorValue[in8]) < turnTarget){
 		turn(70, 1);
@@ -191,19 +224,14 @@ task autonomous()
 			motor[rightLift2] = 0;
 		}
 	}
+	brake(30, -1);
 	resetDrive();
 	resetEnc();
-
 	wait1Msec(400);
-	/*
-	//Backwards into fence
-	while (abs(SensorValue[leftDriveEncoder]) <= 400) {
-		move(60, -1);
-		checkGrip(1);
-	}*/
 
-	while (/*SensorValue[leftLiftEncoder] < 195*/ liftSimple(145) == false) {
-	//	liftComp(10);
+
+	while (liftSimple(145) == false) {
+	//liftComp(10);
 		move(40, -1);
 		checkGrip(1);
 	}
@@ -234,8 +262,18 @@ task autonomous()
 	wait1Msec(200);
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
+	motor[leftLift] = 40;
+	motor[leftLift2] = 40;
+	motor[rightLift] = 40;
+	motor[rightLift2] = 40;
+
+	resetGrabber();
+	wait1Msec(2500);
 	motor[leftLift] = 0;
 	motor[leftLift2] = 0;
 	motor[rightLift] = 0;
 	motor[rightLift2] = 0;
+	resetLiftEnc();
+
+	stopTask(autonomous);
 }

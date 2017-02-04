@@ -16,14 +16,7 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-task timeout(){
-	while(true){
-		if (time1(T1) > 1100){
-			stopTask(autonomous);
-		}
-		wait1Msec(20);
-	}
-}
+
 
 void DrivePower(float left, float right)
 {
@@ -65,7 +58,25 @@ task hold_Lift()
 		}
 	}
 }
-
+task timeout(){
+	while(true){
+		if (time1(T1) > 14000){ // 14 seconds
+			stopTask(autonomous);
+			motor[leftDrive] = 0;
+			motor[leftDrive2] = 0;
+			motor[rightDrive] = 0;
+			motor[rightDrive2] = 0;
+			motor[leftLift] = 0;
+			motor[leftLift2] = 0;
+			motor[rightLift] = 0;
+			motor[rightLift2] = 0;
+			motor[leftGrabber] = 0;
+			motor[rightGrabber] = 0;
+			stopTask(timeout);
+		}
+		wait1Msec(20);
+	}
+}
 task hold_Grabber() {
 	while(true)
 	{

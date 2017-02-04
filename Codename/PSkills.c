@@ -177,11 +177,12 @@ task main()
 	while(vexRT[Btn5D] == 0) {}//Trigger Autonomous
 	clearTimer(T1);
 	startTask(timeout);
+
+
+
+
 	//Forward 27 inches
 	// 780 * (627.2 / 360) = 1359
-
-
-
 	while (SensorValue[leftDriveEncoder] <= 780){
 		move(60, 1);
 	}
