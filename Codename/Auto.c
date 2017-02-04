@@ -207,7 +207,7 @@ task autonomous()
 		move(40, -1);
 		checkGrip(1);
 	}
-
+	resetDrive();
 
 	//Drop cube
 	while (SensorValue[grabberEncoder] < -700) {

@@ -144,6 +144,7 @@ task main()
 	wait1Msec(1000);
 	while(vexRT[Btn5D] == 0) {}//Trigger Autonomous
 	clearTimer(T1);
+	startTask(timeout);
 	//int timeOut = 0;
 
 	//Forward 27 inches
