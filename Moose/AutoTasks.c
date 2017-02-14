@@ -93,14 +93,14 @@ void checkGrip(int type){
 
 // void liftComp(int target){
 // 	int correction = target - SensorValue[leftliftEncoder];
-	
+
 // 	if (SensorValue[leftLiftEncoder] < target) {
 // 		motor[leftLift] = -1*(correction*correction);
 // 		motor[leftLift2] = -1*(correction*correction);
 // 		motor[rightLift] = -1*(correction*correction);
 // 		motor[rightLift2] = -1*(correction*correction);
 // 	}
-	
+
 // 	if (SensorValue[leftLiftEncoder] > target) {
 // 		motor[leftLift] = correction*correction;
 // 		motor[leftLift2] = correction*correction;
@@ -110,7 +110,7 @@ void checkGrip(int type){
 // }
 
 bool liftSimple(int target){
-	int correction = target - SensorValue[leftliftEncoder];
+	int correction = target - SensorValue[leftLiftEncoder];
 	if (SensorValue[leftLiftEncoder] < target) {
 		motor[leftLift] = -1*(correction*correction);
 		motor[leftLift2] = -1*(correction*correction);
@@ -128,8 +128,8 @@ bool liftSimple(int target){
 	return false;
 }
 
-//Action 0 = pick up 
-//Action 1 = drop 
+//Action 0 = pick up
+//Action 1 = drop
 int grabber(int action, int type){
 	int target;
 	//Pick up
@@ -145,7 +145,7 @@ int grabber(int action, int type){
 	}
 	//Drop
 	if (action == 1){
-		target = -450
+		target = -450;
 	}
-	return target
+	return target;
 }

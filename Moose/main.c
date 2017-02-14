@@ -71,7 +71,6 @@ int grabberSpeed = 0;
 
 float leftTarget = 0;
 float rightTarget = 0;
-float liftTarget = 0;
 
 bool encoderDrivingActive = false;
 bool gyroTurningActive = false;

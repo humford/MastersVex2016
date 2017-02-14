@@ -18,7 +18,6 @@
 
 task usercontrol()
 {
-  driverControl = true;
   encoderDrivingActive = true;
 
   while(true)
