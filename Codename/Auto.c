@@ -18,11 +18,11 @@
 
 task autonomous()
 {
-	int timeOut = 0;
+	clearTimer(T1);
+	startTask(timeout);
 
 	//Forward 27 inches
-	// 780 * (627.2 / 360) = 1359
-	while (SensorValue[leftDriveEncoder] <= 1359){
+	while (SensorValue[leftDriveEncoder] <= 780){
 		move(60, 1);
 	}
 	resetDrive();
@@ -31,13 +31,13 @@ task autonomous()
 	while (abs(SensorValue[in8]) < 600){
 		turn(60, 1);
 	}
+	brake(30, -1);
 	resetDrive();
 	resetEnc();
 	wait1Msec(300);
 
 	//Forward 17 inches
-	// 580  * (627.2 / 360) = 1010
-	while (SensorValue[leftDriveEncoder] <= 1010){
+	while (SensorValue[leftDriveEncoder] <= 580){
 		move(60, 1);
 	}
 	resetDrive();
@@ -49,12 +49,13 @@ task autonomous()
 	}
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
+	
 	resetDrive();
 	resetEnc();
 	wait1Msec(300);
 
 	//Backwards 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 1010) {
+	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
 		move(60, -1);
 		checkGrip(1);
 	}
@@ -62,12 +63,12 @@ task autonomous()
 	resetEnc();
 	wait1Msec(300);
 
-	int turnTarget = (abs(SensorValue[in8])+300);
+	int turnTarget = (abs(SensorValue[in8])+250);
 	//CCW Turn 90 Degrees
 	while (abs(SensorValue[in8]) < turnTarget){
 		turn(70, 1);
 		checkGrip(1);
-		if (leftLiftEncoder < 20){
+		if (SensorValue[leftLiftEncoder] < 20){
 			motor[leftLift] = -90;
 			motor[leftLift2] = -90;
 			motor[rightLift] = -90;
@@ -79,6 +80,7 @@ task autonomous()
 			motor[rightLift2] = 0;
 		}
 	}
+	brake(30, -1);
 	resetDrive();
 	resetEnc();
 	wait1Msec(400);
@@ -88,11 +90,12 @@ task autonomous()
 		checkGrip(1);
 	}
 
+	resetDrive();
 	wait1Msec(1000);
 
 	//Drop cube
 	while (SensorValue[grabberEncoder] < -700) {
-		if (leftLiftEncoder < 145){
+		if (SensorValue[leftLiftEncoder] < 145){
 			motor[leftLift] = -90;
 			motor[leftLift2] = -90;
 			motor[rightLift] = -90;
@@ -113,13 +116,21 @@ task autonomous()
 	motor[leftLift2] = 90;
 	motor[rightLift] = 90;
 	motor[rightLift2] = 90;
-	
 	wait1Msec(200);
-	
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
+	motor[leftLift] = 40;
+	motor[leftLift2] = 40;
+	motor[rightLift] = 40;
+	motor[rightLift2] = 40;
+
+	resetGrabber();
+	wait1Msec(2500);
 	motor[leftLift] = 0;
 	motor[leftLift2] = 0;
 	motor[rightLift] = 0;
 	motor[rightLift2] = 0;
+	resetLiftEnc();
+
+	stopTask(autonomous);
 }

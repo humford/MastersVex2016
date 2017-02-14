@@ -25,6 +25,15 @@ void move(int speed, int dir){
 	motor[rightDrive2] = speed*dir;
 }
 
+void brake(int speed, int dir){
+// dir == 1 CCW
+// dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
+}
+
 void turn(int speed, int dir){
 	// dir == 1 CCW
 	// dir == -1 CW
@@ -46,6 +55,20 @@ void resetEnc() {
 	SensorValue[rightDriveEncoder] = 0;
 	SensorValue[leftLiftEncoder] = 0;
 	SensorValue[leftLiftEncoder] = 0;
+}
+
+void resetLiftEnc(){
+	SensorValue[leftLiftEncoder] = 0;
+	SensorValue[rightLiftEncoder] = 0;
+}
+
+void resetGrabber(){
+	while(SensorValue[grabberEncoder] < -600) {
+		motor[leftGrabber] = -40;
+		motor[rightGrabber] = -40;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
 }
 
 void checkGrip(int type){
@@ -105,6 +128,8 @@ bool liftSimple(int target){
 	return false;
 }
 
+//Action 0 = pick up 
+//Action 1 = drop 
 int grabber(int action, int type){
 	int target;
 	//Pick up
