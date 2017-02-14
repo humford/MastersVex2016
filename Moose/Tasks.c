@@ -16,8 +16,6 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-
-
 void DrivePower(float left, float right)
 {
 	leftTarget = left;
@@ -58,7 +56,6 @@ task gyro_Drive()
 
 	while(true)
 	{
-		gyroscope = SensorValue[in8];
 		if(gyroTurningActive)
 		{
 			last_error = error;
@@ -112,8 +109,6 @@ task timeout(){
 
 task Set_Drive()
 {
-	leftEnc = SensorValue[leftDriveEncoder];
-	rightEnc = SensorValue[rightDriveEncoder];
 	int leftCur = 0, rightCur = 0, leftError = 0, rightError = 0;
 	//PLAY WITH VALEUS TILL THEY WORK
 	int Time_Step = 20;

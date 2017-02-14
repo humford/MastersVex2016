@@ -89,7 +89,6 @@ task autonomous()
 		move(40, -1);
 		checkGrip(1);
 	}
-	resetDrive();
 
 	resetDrive();
 	wait1Msec(1000);
