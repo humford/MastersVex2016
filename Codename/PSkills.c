@@ -18,8 +18,6 @@
 
 // IME 627.2 counts per revolution
 // 1 Revolution = 4Pi = 12.5663706
-//
-
 
 void move(int speed, int dir){
 // dir == 1 forward

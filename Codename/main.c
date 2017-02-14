@@ -89,6 +89,7 @@ bool encoderDrivingActive = false;
 #include "PreAuto.c"
 
 ///////////////////////////////////////////////////BEGIN AUTONOMOUS
+#include "AutoTasks.c"
 #include "Auto.c"
 
 ///////////////////////////////////////////////////BEGIN DRIVER CONTROL
