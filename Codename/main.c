@@ -83,59 +83,10 @@ bool encoderDrivingActive = false;
 //////////////////////////////////INCLUDED FILES
 
 #include "Vex_Competition_Includes.c"   //VEX REQUIRED FILE
-#include "Tasks.c"          //RPM CALC // RPM CONTROL
+#include "Tasks.c"          			//RPM CALC // RPM CONTROL
 
 ///////////////////////////////////////////////////BEGIN PREAUTONOMOUS
-
-void pre_auton()
-{
-  // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
-  // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
-  bStopTasksBetweenModes = false;
-
-  //DISPLAY BATTERY LEVEL
-
-	//bLCDBacklight = true;                                    // Turn on LCD Backlight
-
-  	//SELECT MODE
-  	/*
-	while(vrDisabled && nLCDButtons != CENTER_BUTTON)
-	{
-		clearLCDLine(0);
-		clearLCDLine(1);
-		switch(autonomous_side)
-		{
-			case 0:
-				displayLCDString(0, 2, "Select Side:");
-				break;
-			case BLUE:
-				displayLCDString(0, 1, "BLUE Selected");
-				break;
-			case RED:
-				displayLCDString(0, 2, "RED Selected");
-				break;
-		}
-
-		if(nLCDButtons == LEFT_BUTTON)autonomous_side = BLUE;
-		else if(nLCDButtons == RIGHT_BUTTON)autonomous_side = RED;
-		displayLCDString(1, 0, "BLUE         RED");
-		wait1Msec(100);
-	}*/
-
-  //CALIBRATE GYRO
-
-	SensorType[in8] = sensorNone;
-  wait1Msec(1000);
-  //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
-  SensorType[in8] = sensorGyro;
-  wait1Msec(2000);
-	SensorValue[in8] = 0;
-	wait1Msec(1000);
-
-	//startTask(Lift_Control);
-	startTask(Set_Drive);
-	startTask(gyro_Drive);
-}
+#include "PreAuto.c"
 
 ///////////////////////////////////////////////////BEGIN AUTONOMOUS
 #include "Auto.c"
