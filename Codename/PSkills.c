@@ -18,6 +18,8 @@
 
 // IME 627.2 counts per revolution
 // 1 Revolution = 4Pi = 12.5663706
+//
+#include "gyroTask.c"
 
 void move(int speed, int dir){
 // dir == 1 forward
@@ -28,7 +30,7 @@ void move(int speed, int dir){
 	motor[rightDrive2] = speed*dir;
 }
 
-void stopDrive (){
+void resetDrive (){
 	motor[leftDrive] = 0;
 	motor[leftDrive2] = 0;
 	motor[rightDrive] = 0;
@@ -46,6 +48,18 @@ void resetEnc() {
 void turn(int speed, int dir){
 // dir == 1 CCW
 // dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
+
+}
+void orient(int speed, int target){
+// dir == 1 CCW
+// dir == -1 CW
+
+	int dir = (target - SensorValue[in8])/abs(target - SensorValue[in8])
+
 	motor[leftDrive] = speed*(-dir);
 	motor[leftDrive2] = speed*(-dir);
 	motor[rightDrive] = speed*dir;
@@ -127,34 +141,318 @@ void checkGrip(int type){
 		motor[rightGrabber] = 0;
 	}
 }
+void resetGrabber(){
+	while(SensorValue[grabberEncoder] < -600) {
+		motor[leftGrabber] = -40;
+		motor[rightGrabber] = -40;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
 
 
+}
+void brake(int speed, int dir){
+// dir == 1 CCW
+// dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
 
+}
+void resetLiftEnc(){
+	SensorValue[leftLiftEncoder] = 0;
+	SensorValue[rightLiftEncoder] = 0;
+}
 task main()
 {
-	//Open claw, lift, and turn all together
+	startTask(gyroUpdate);
+	SensorType[in8] = sensorNone;
+  wait1Msec(1000);
+  //Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
+  SensorType[in8] = sensorGyro;
+  wait1Msec(2000);
+	SensorValue[in8] = 0;
+	wait1Msec(1000);
+	while(vexRT[Btn5D] == 0) {}//Trigger Autonomous
+	clearTimer(T1);
+	startTask(timeout);
 
+
+
+
+	//Forward 27 inches
+	// 780 * (627.2 / 360) = 1359
+	while (SensorValue[leftDriveEncoder] <= 780){
+		move(60, 1);
+	}
+	resetDrive();
+
+	//CCW Turn 90 Degrees
+	while (abs(SensorValue[in8]) < 600){
+		turn(60, 1);
+	}
+	brake(30, -1);
+	resetDrive();
+	resetEnc();
+	wait1Msec(300);
+
+	//Forward 17 inches
+	// 580  * (627.2 / 360) = 1010
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
+	resetDrive();
+
+	//Grab cube
+	while (SensorValue[grabberEncoder] > grabber(0, 1)) {
+			motor[leftGrabber] = 127;
+			motor[rightGrabber] = 127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+
+	resetDrive();
+	resetEnc();
+	wait1Msec(300);
+
+	//Backwards 17 inches
+	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
+		move(60, -1);
+		checkGrip(1);
+	}
+	resetDrive();
+	resetEnc();
+	wait1Msec(300);
+
+	int turnTarget = (abs(SensorValue[in8])+250);
+	//CCW Turn 90 Degrees
+	while (abs(SensorValue[in8]) < turnTarget){
+		turn(70, 1);
+		checkGrip(1);
+		if (SensorValue[leftLiftEncoder] < 20){
+			motor[leftLift] = -90;
+			motor[leftLift2] = -90;
+			motor[rightLift] = -90;
+			motor[rightLift2] = -90;
+		} else {
+			motor[leftLift] = 0;
+			motor[leftLift2] = 0;
+			motor[rightLift] = 0;
+			motor[rightLift2] = 0;
+		}
+	}
+	brake(30, -1);
+	resetDrive();
+	resetEnc();
+	wait1Msec(400);
+
+
+	while (liftSimple(145) == false) {
+	//liftComp(10);
+		move(40, -1);
+		checkGrip(1);
+	}
+	resetDrive();
+
+	//Drop cube
+	while (SensorValue[grabberEncoder] < -700) {
+		if (SensorValue[leftLiftEncoder] < 145){
+			motor[leftLift] = -90;
+			motor[leftLift2] = -90;
+			motor[rightLift] = -90;
+			motor[rightLift2] = -90;
+		} else {
+			motor[leftLift] = 90;
+			motor[leftLift2] = 90;
+			motor[rightLift] = 90;
+			motor[rightLift2] = 90;
+		}
+		motor[leftGrabber] = -127;
+		motor[rightGrabber] = -127;
+	}
+	motor[leftGrabber] = 50;
+	motor[rightGrabber] = 50;
+	motor[leftLift] = 90;
+	motor[leftLift2] = 90;
+	motor[rightLift] = 90;
+	motor[rightLift2] = 90;
+	wait1Msec(200);
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+	motor[leftLift] = 40;
+	motor[leftLift2] = 40;
+	motor[rightLift] = 40;
+	motor[rightLift2] = 40;
+
+	resetGrabber();
+	wait1Msec(2500);
+	motor[leftLift] = 0;
+	motor[leftLift2] = 0;
+	motor[rightLift] = 0;
+	motor[rightLift2] = 0;
+	resetLiftEnc();
+
+
+
+
+
+//End of Autonomous
+
+	int i = 0;
+	int driverLoad = 1;
+//	bool oriented = false;
+	while(i < 1){ //Driver Load loop
+		/*
+	int targetCounter = 0;
+	while (oriented == false) {
+		orient(80, 1290);
+		//180 degrees = 1290
+		if (SensorValue[in8] == 1290 && targetCounter < 50){
+			//targetCounter++;
+			wait1Msec(50);
+		} else {
+			oriented = true;
+		}
+	}
+	oriented = false;
+	targetCounter = 0;*/
+	resetDrive();
+	resetEnc();
+	wait1Msec(500);
+
+	//Change distance
+	while (SensorValue[leftDriveEncoder] <= 830){
+		move(60, 1);
+	}
+	resetDrive();
+	resetEnc();
+	wait1Msec(700);
+	if (i == 2){
+		driverLoad = 0;
+	}
+	//Grab Driver Load
+	while (SensorValue[grabberEncoder] > grabber(0, driverLoad)) {
+			motor[leftGrabber] = 127;
+			motor[rightGrabber] = 127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+
+
+	while (abs(SensorValue[leftDriveEncoder]) <= 100){
+		move(60, -1);
+		checkGrip(driverLoad);
+	}
+	resetDrive();
+	wait1Msec(700);
+	while (/*SensorValue[leftLiftEncoder] < 195*/ liftSimple(165) == false) {
+	//	liftComp(10);
+		move(70, -1); // Adjust speed for timing
+		checkGrip(driverLoad);
+	}
+	resetDrive();
+
+	//Drop cube
+	while (SensorValue[grabberEncoder] < -700) {
+		if (SensorValue[leftLiftEncoder] < 165){
+			motor[leftLift] = -90;
+			motor[leftLift2] = -90;
+			motor[rightLift] = -90;
+			motor[rightLift2] = -90;
+		} else {
+			motor[leftLift] = 90;
+			motor[leftLift2] = 90;
+			motor[rightLift] = 90;
+			motor[rightLift2] = 90;
+		}
+		motor[leftGrabber] = -127;
+		motor[rightGrabber] = -127;
+	}
+	motor[leftGrabber] = 50;
+	motor[rightGrabber] = 50;
+	motor[leftLift] = 90;
+	motor[leftLift2] = 90;
+	motor[rightLift] = 90;
+	motor[rightLift2] = 90;
+	wait1Msec(200);
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+	motor[leftLift] = 30;
+	motor[leftLift2] = 30;
+	motor[rightLift] = 30;
+	motor[rightLift2] = 30;
+	resetDrive();
+	resetGrabber();
+	wait1Msec(2000);
+	motor[leftLift] = 0;
+	motor[leftLift2] = 0;
+	motor[rightLift] = 0;
+	motor[rightLift2] = 0;
+	i++;
+	resetDrive();
+	}
+	/*
+	//Open claw, lift, and turn (90 Degrees) all together
+	while (SensorValue[in8] <= 580){
+		turn(80, 900);
+	}
 	//Move forward into 3 stars and grab
-
-	//Move back and turn left
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
+	while (SensorValue[grabberEncoder] > grabber(0, 0)) {
+			motor[leftGrabber] = 127;
+			motor[rightGrabber] = 127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+	//Move back (modified back, slowly easing left) and turn left
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+		motor[leftDrive] = 70;
+		motor[leftDrive2] = 70;
+	}
+	while (SensorValue[in8] <= 580){
+		turn(80, 0);
+	}
 	//Orient to 180 degrees with Gyro
-
+	while (SensorValue[in8] <= 580){
+		turn(80, 1800);
+	}
 	//Move backwards towards fence and throw stars
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+	}
 	//Forward to pick up driver loads x number of times
 	//4 Stars, 2 Cubes
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
 	//From fence orient to gyro 90 degrees
-
+	while (SensorValue[in8] <= 580){
+		turn(80, 900);
+	}
 	//Move forward and pick up 3 stars
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
 	//Orient to gyro 180 degrees
-
+	//int gyroDir = (1800 - SensorValue[in8])/abs(1800 - SensorValue[in8]);
+	while (SensorValue[in8] <= 580){
+		turn(80, 1800);
+	}
 	//Move backwards to fence and throw stars
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+	}
 	//Move forward grab cube
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, 1);
+	}
 	//Move backwards to fence and throw cube
-
+	while (SensorValue[leftDriveEncoder] <= 580){
+		move(60, -1);
+	}
+	*/
 }

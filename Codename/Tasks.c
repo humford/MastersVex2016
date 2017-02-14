@@ -22,51 +22,27 @@ void DrivePower(float left, float right)
 	rightTarget = right;
 }
 
-void MoveForDistance(int dist)
-{
-  int startRight = -SensorValue[rightDriveEncoder];
-	int startLeft = SensorValue[leftDriveEncoder];
+// void MoveForDistance(int dist)
+// {
+//   int startRight = -SensorValue[rightDriveEncoder];
+// 	int startLeft = SensorValue[leftDriveEncoder];
 
-	//int progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
-	int progress = abs(SensorValue[leftDriveEncoder] - startLeft);
+// 	//int progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+// 	int progress = abs(SensorValue[leftDriveEncoder] - startLeft);
 
-	//int goal = startLeft + (360 * (dist / 4));
-	int goal = startLeft + dist;
+// 	//int goal = startLeft + (360 * (dist / 4));
+// 	int goal = startLeft + dist;
 
-	if(encoderDrivingActive)
-	{
-		DrivePower(30, 30);
-		while(progress < goal) {
-			//progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
-			progress = abs(SensorValue[leftDriveEncoder] - startLeft);
-		}
-		DrivePower(0, 0);
-	}
-}
-
-bool holdLiftActive = false;
-
-task hold_Lift()
-{
-	while(true)
-	{
-		if(holdLiftActive)
-		{
-
-		}
-	}
-}
-
-task hold_Grabber() {
-	while(true)
-	{
-		if(holdLiftActive)
-		{
-
-		}
-	}
-
-}
+// 	if(encoderDrivingActive)
+// 	{
+// 		DrivePower(30, 30);
+// 		while(progress < goal) {
+// 			//progress = ( abs(startLeft - SensorValue[leftDriveEncoder]) + abs(startRight - SensorValue[rightDriveEncoder]) ) / 2;
+// 			progress = abs(SensorValue[leftDriveEncoder] - startLeft);
+// 		}
+// 		DrivePower(0, 0);
+// 	}
+// }
 
 task gyro_Drive()
 {
@@ -137,47 +113,47 @@ task Set_Drive()
 	}
 }
 
-float kp = 1, kd = 1;
-float error = 0, last_error = 0, derivative = 0, power = 0;
-float oldTarget = 0;
-float time_step = 100;
-bool driverControl = false;
+// float kp = 1, kd = 1;
+// float error = 0, last_error = 0, derivative = 0, power = 0;
+// float oldTarget = 0;
+// float time_step = 100;
+// bool driverControl = false;
 
-task Lift_Control()
-{
-	float max_power = 127;
+// task Lift_Control()
+// {
+// 	float max_power = 127;
 
-	while(true)
-	{
-		last_error = error;
-		int sensor_val = (SensorValue[rightLift] + SensorValue[leftLift]) / 2;
-		error = liftTarget - sensor_val;
-		derivative = (error - last_error)/time_step;
-		power = kp * error + kd * derivative;
+// 	while(true)
+// 	{
+// 		last_error = error;
+// 		int sensor_val = (SensorValue[rightLift] + SensorValue[leftLift]) / 2;
+// 		error = liftTarget - sensor_val;
+// 		derivative = (error - last_error)/time_step;
+// 		power = kp * error + kd * derivative;
 
-		if(power > max_power) power = max_power;
-		if(power < - max_power) power = - max_power;
+// 		if(power > max_power) power = max_power;
+// 		if(power < - max_power) power = - max_power;
 
-		if(driverControl)
-		{
-			if(vexRT[Btn8R])
-			{
-				power = 0;
-			}
-			if(vexRT[Btn8L]  && abs(error) < 250 && abs(liftTarget - LIFT_MIN) < 250)
-			{
-				power = -100;
-			}
+// 		if(driverControl)
+// 		{
+// 			if(vexRT[Btn8R])
+// 			{
+// 				power = 0;
+// 			}
+// 			if(vexRT[Btn8L]  && abs(error) < 250 && abs(liftTarget - LIFT_MIN) < 250)
+// 			{
+// 				power = -100;
+// 			}
 
-		}
+// 		}
 
-		motor[rightLift] = power;
-		motor[leftLift] = power;
-		motor[rightLift2] = power;
-		motor[leftLift2] = power;
+// 		motor[rightLift] = power;
+// 		motor[leftLift] = power;
+// 		motor[rightLift2] = power;
+// 		motor[leftLift2] = power;
 
-		oldTarget = liftTarget;
+// 		oldTarget = liftTarget;
 
-		wait1Msec(time_step);
-	}
-}
+// 		wait1Msec(time_step);
+// 	}
+// }

@@ -64,8 +64,7 @@
 int liftRightSpeed = 0;
 int liftLeftSpeed = 0;
 int liftSpeed = 0;
-int liftRightValue = 0;
-int liftLeftValue = 0;
+
 
 int grabberRightSpeed = 0;
 int grabberLeftSpeed = 0;
