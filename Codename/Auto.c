@@ -88,6 +88,7 @@ task autonomous()
 		checkGrip(1);
 	}
 
+	wait1Msec(1000);
 
 	//Drop cube
 	while (SensorValue[grabberEncoder] < -700) {

@@ -25,17 +25,14 @@ task usercontrol()
   {
     if(vexRT[Btn6U])
     {
-    	//liftTarget = LIFT_MAX;
     	liftSpeed = -127;
     }
     else if(vexRT[Btn6D])
     {
-    	//liftTarget = LIFT_MIN;
     	liftSpeed = 127;
     }
     else if(!vexRT[Btn6U] && !vexRT[Btn6D])
     {
-    	//liftTarget = LIFT_MIN;
     	liftSpeed = 0;
     }
 
@@ -64,10 +61,6 @@ task usercontrol()
     motor[rightLift2] = liftRightSpeed;
     motor[leftLift2] = liftLeftSpeed;
 
-    /*motor[leftDrive] = vexRT[Ch3] - vexRT[Ch1];
-    motor[leftDrive2] = vexRT[Ch3] - vexRT[Ch1];
-   	motor[rightDrive] = vexRT[Ch3] + vexRT[Ch1];
-   	motor[rightDrive2] = vexRT[Ch3] + vexRT[Ch1];*/
     DrivePower((vexRT[Ch3] + vexRT[Ch1]) / 2 ,(vexRT[Ch3] - vexRT[Ch1]) / 2 );
    }
 }

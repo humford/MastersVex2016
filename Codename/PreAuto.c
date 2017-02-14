@@ -32,6 +32,10 @@ void pre_auton()
 	SensorValue[in8] = 0;
 	wait1Msec(1000);
 
+  //Reset lift encoders
+  SensorValue[leftLiftEncoder] = 0;
+  SensorValue[rightLiftEncoder] = 0;
+
 	startTask(Set_Drive);
 	startTask(gyro_Drive);
 }
