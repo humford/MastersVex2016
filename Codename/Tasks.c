@@ -87,6 +87,26 @@ task gyro_Drive()
 	}
 }
 
+task timeout(){
+	while(true){
+		if (time1(T1) > 14000){ // 14 seconds
+			stopTask(autonomous);
+			motor[leftDrive] = 0;
+			motor[leftDrive2] = 0;
+			motor[rightDrive] = 0;
+			motor[rightDrive2] = 0;
+			motor[leftLift] = 0;
+			motor[leftLift2] = 0;
+			motor[rightLift] = 0;
+			motor[rightLift2] = 0;
+			motor[leftGrabber] = 0;
+			motor[rightGrabber] = 0;
+			stopTask(timeout);
+		}
+		wait1Msec(20);
+	}
+}
+
 task Set_Drive()
 {
 	int leftCur = 0, rightCur = 0, leftError = 0, rightError = 0;
