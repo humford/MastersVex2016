@@ -35,6 +35,23 @@
 
 #include "Tasks.c"          			//RPM CALC // RPM CONTROL
 
+//////////////////////////////////GLOBAL VARIABLES
+int liftRightSpeed = 0;
+int liftLeftSpeed = 0;
+int liftSpeed = 0;
+
+
+int grabberRightSpeed = 0;
+int grabberLeftSpeed = 0;
+int grabberSpeed = 0;
+
+float leftTarget = 0;
+float rightTarget = 0;
+
+bool encoderDrivingActive = false;
+bool gyroTurningActive = false;
+float gyroTarget = 0, speed = 0;
+
 void move(int speed, int dir){
 	// dir == 1 forward
 	// dir == -1 backwards
