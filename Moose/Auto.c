@@ -49,7 +49,7 @@ task autonomous()
 	}
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
-	
+
 	resetDrive();
 	resetEnc();
 	wait1Msec(300);
@@ -109,7 +109,7 @@ task autonomous()
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}
-	
+
 	motor[leftGrabber] = 50;
 	motor[rightGrabber] = 50;
 	motor[leftLift] = 90;

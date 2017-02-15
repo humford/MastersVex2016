@@ -18,8 +18,6 @@
 
 task usercontrol()
 {
-  encoderDrivingActive = true;
-
   while(true)
   {
     if(vexRT[Btn6U])
@@ -30,7 +28,7 @@ task usercontrol()
     {
     	liftSpeed = 127;
     }
-    else if(!vexRT[Btn6U] && !vexRT[Btn6D])
+    else
     {
     	liftSpeed = 0;
     }
@@ -60,6 +58,6 @@ task usercontrol()
     motor[rightLift2] = liftRightSpeed;
     motor[leftLift2] = liftLeftSpeed;
 
-    DrivePower(-vexRT[Ch3] + vexRT[Ch1], -vexRT[Ch3] - vexRT[Ch1]);
+    DrivePower(vexRT[Ch3] + vexRT[Ch1], vexRT[Ch3] - vexRT[Ch1]);
    }
 }
