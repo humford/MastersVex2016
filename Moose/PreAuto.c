@@ -37,5 +37,5 @@ void pre_auton()
   SensorValue[rightLiftEncoder] = 0;
 
 	startTask(Set_Drive);
-	startTask(gyro_Drive);
+	// startTask(gyro_Drive);
 }

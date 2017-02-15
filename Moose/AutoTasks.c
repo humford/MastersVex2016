@@ -26,8 +26,8 @@ void move(int speed, int dir){
 }
 
 void brake(int speed, int dir){
-// dir == 1 CCW
-// dir == -1 CW
+	// dir == 1 CCW
+	// dir == -1 CW
 	motor[leftDrive] = speed*(-dir);
 	motor[leftDrive2] = speed*(-dir);
 	motor[rightDrive] = speed*dir;
