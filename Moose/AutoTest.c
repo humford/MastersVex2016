@@ -33,9 +33,6 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#include "Tasks.c"          			//RPM CALC // RPM CONTROL
-#include "AutoTasks.c"
-
 //////////////////////////////////GLOBAL VARIABLES
 int liftRightSpeed = 0;
 int liftLeftSpeed = 0;
@@ -52,20 +49,24 @@ bool encoderDrivingActive = false;
 bool gyroTurningActive = false;
 float gyroTarget = 0, speed = 0;
 
-//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
-SensorType[in8] = sensorNone;
-wait1Msec(1000);
-SensorType[in8] = sensorGyro;
-wait1Msec(2000);
-
-//Reset sensor
-SensorValue[in8] = 0;
-wait1Msec(1000);
-
-//Reset lift encoders
-SensorValue[leftLiftEncoder] = 0;
-SensorValue[rightLiftEncoder] = 0;
-
+#include "Tasks.c"          			//RPM CALC // RPM CONTROL
+#include "AutoTasks.c"
 #include "Auto.c"
 
-startTask(autonomous);
+task main() {
+		//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
+		SensorType[in8] = sensorNone;
+		wait1Msec(1000);
+		SensorType[in8] = sensorGyro;
+		wait1Msec(2000);
+
+		//Reset sensor
+		SensorValue[in8] = 0;
+		wait1Msec(1000);
+
+		//Reset lift encoders
+		SensorValue[leftLiftEncoder] = 0;
+		SensorValue[rightLiftEncoder] = 0;
+
+		startTask(autonomous);
+}
