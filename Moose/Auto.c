@@ -22,7 +22,7 @@ task autonomous()
 	startTask(timeout);
 
 	//Forward 27 inches
-	while (SensorValue[leftDriveEncoder] <= 780){
+	while (abs(SensorValue[leftDriveEncoder]) <= 780){
 		move(60, 1);
 	}
 	resetDrive();
@@ -37,7 +37,7 @@ task autonomous()
 	wait1Msec(300);
 
 	//Forward 17 inches
-	while (SensorValue[leftDriveEncoder] <= 580){
+	while (abs(SensorValue[leftDriveEncoder]) <= 580){
 		move(60, 1);
 	}
 	resetDrive();
