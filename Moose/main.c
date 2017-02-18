@@ -59,9 +59,9 @@ int grabberSpeed = 0;
 float leftTarget = 0;
 float rightTarget = 0;
 
-bool encoderDrivingActive = false;
-bool gyroTurningActive = false;
-float gyroTarget = 0, speed = 0;
+//bool encoderDrivingActive = false;
+//bool gyroTurningActive = false;
+//float gyroTarget = 0, speed = 0;
 
 //////////////////////////////////INCLUDED FILES
 

@@ -44,6 +44,7 @@ void DrivePower(float left, float right)
 // 	}
 // }
 
+/*
 task gyro_Drive()
 {
 	float kp = 0.25, ki = 0.0, kd = 35;
@@ -86,6 +87,7 @@ task gyro_Drive()
 		wait1Msec(time_step);
 	}
 }
+*/
 
 task Set_Drive()
 {
