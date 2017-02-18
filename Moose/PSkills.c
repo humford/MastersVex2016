@@ -275,6 +275,7 @@ task main()
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}
+	
 	motor[leftGrabber] = 50;
 	motor[rightGrabber] = 50;
 	motor[leftLift] = 90;
@@ -299,7 +300,6 @@ task main()
 
 	int i = 0;
 	int driverLoad = 1;
-//	bool oriented = false;
 	while(i < 1){ //Driver Load loop
 		resetDrive();
 		resetEnc();
@@ -377,7 +377,4 @@ task main()
 		i++;
 		resetDrive();
 	}
-
-
-
 }
