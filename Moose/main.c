@@ -73,7 +73,7 @@ void pre_auton()
 {
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
   // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
-  bStopTasksBetweenModes = false;
+  bStopTasksBetweenModes = true;
 
 	//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
 	SensorType[in8] = sensorNone;
@@ -89,7 +89,6 @@ void pre_auton()
   SensorValue[leftLiftEncoder] = 0;
   SensorValue[rightLiftEncoder] = 0;
 
-	startTask(Set_Drive);
 	// startTask(gyro_Drive);
 }
 

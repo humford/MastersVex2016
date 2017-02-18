@@ -18,6 +18,8 @@
 
 task usercontrol()
 {
+  startTask(Set_Drive);
+
   while(true)
   {
     if(vexRT[Btn6U])
