@@ -27,24 +27,14 @@ task autonomous()
 	startTask(timeout);
 
 	//Forward 27 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 780){
-		speed = 60;
-	}
-	speed = 0;
-	resetEnc();
-	wait1Msec(300);
+	move(780, 60, false)
 	
 	//CCW Turn 90 Degrees
 	gyroTarget = -600;
 	wait1Msec(2000);
 
 	//Forward 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 580){
-		speed = 60;
-	}
-	speed = 0;
-	resetEnc();
-	wait1Msec(300);
+	move(580, 60, false)
 
 	//Grab cube
 	while (SensorValue[grabberEncoder] > grabber(0, 1)) {
@@ -57,15 +47,9 @@ task autonomous()
 	wait1Msec(300);
 
 	//Backwards 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
-		speed = 60;
-		checkGrip(1);
-	}
-	speed = 0;
-	resetEnc();
-	wait1Msec(300);
+	move(580, -60, true)
 
-	//CCW Turn 90 Degrees
+	//CCW Turn Degrees
 	gyroTarget = -850;
 	while (abs(SensorValue[in8]) < 850){
 		checkGrip(1);

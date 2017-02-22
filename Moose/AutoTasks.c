@@ -38,7 +38,7 @@ task timeout(){
 
 bool gyroTurningActive = false;
 float gyroTarget = 0, speed = 0;
-task gyro_Drive()
+task Gyro_Drive()
 {
 	float kp = 0.25, ki = 0.0, kd = 35;
 	float error = 0, last_error = 0, integral = 0, derivative = 0, power = 0;
@@ -81,13 +81,16 @@ task gyro_Drive()
 	}
 }
 
-void move(int speed, int dir){
-	// dir == 1 forward
-	// dir == -1 backwards
-	motor[leftDrive] = speed*dir;
-	motor[leftDrive2] = speed*dir;
-	motor[rightDrive] = speed*dir;
-	motor[rightDrive2] = speed*dir;
+void move(int dist, int s, bool cube){
+	while (abs(SensorValue[leftDriveEncoder]) <= dist){
+		speed = s;
+		if cube {
+			checkGrip(1);
+		}
+	}
+	speed = 0;
+	resetEnc();
+	wait1Msec(300);
 }
 
 void brake(int speed, int dir){
