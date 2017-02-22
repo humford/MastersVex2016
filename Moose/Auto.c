@@ -18,29 +18,33 @@
 
 task autonomous()
 {
+	startTask(Set_Drive);
+	startTask(Gyro_Drive);
+
+	gyroTurningActive = true;
+
 	clearTimer(T1);
 	startTask(timeout);
 
 	//Forward 27 inches
 	while (abs(SensorValue[leftDriveEncoder]) <= 780){
-		move(60, 1);
+		speed = 60;
 	}
-	resetDrive();
-
-	//CCW Turn 90 Degrees
-	while (abs(SensorValue[in8]) < 600){
-		turn(60, 1);
-	}
-	brake(30, -1);
-	resetDrive();
+	speed = 0;
 	resetEnc();
 	wait1Msec(300);
+	
+	//CCW Turn 90 Degrees
+	gyroTarget = -600;
+	wait1Msec(2000);
 
 	//Forward 17 inches
 	while (abs(SensorValue[leftDriveEncoder]) <= 580){
-		move(60, 1);
+		speed = 60;
 	}
-	resetDrive();
+	speed = 0;
+	resetEnc();
+	wait1Msec(300);
 
 	//Grab cube
 	while (SensorValue[grabberEncoder] > grabber(0, 1)) {
@@ -49,24 +53,21 @@ task autonomous()
 	}
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
-
-	resetDrive();
 	resetEnc();
 	wait1Msec(300);
 
 	//Backwards 17 inches
 	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
-		move(60, -1);
+		speed = 60;
 		checkGrip(1);
 	}
-	resetDrive();
+	speed = 0;
 	resetEnc();
 	wait1Msec(300);
 
-	int turnTarget = (abs(SensorValue[in8])+250);
 	//CCW Turn 90 Degrees
-	while (abs(SensorValue[in8]) < turnTarget){
-		turn(70, 1);
+	gyroTarget = -850;
+	while (abs(SensorValue[in8]) < 850){
 		checkGrip(1);
 		if (SensorValue[leftLiftEncoder] < 20){
 			motor[leftLift] = -90;
@@ -80,16 +81,14 @@ task autonomous()
 			motor[rightLift2] = 0;
 		}
 	}
-	brake(30, -1);
-	resetDrive();
 	resetEnc();
 	wait1Msec(400);
 
 	while (liftSimple(145) == false) {
-		move(40, -1);
+		speed = -40;
 		checkGrip(1);
 	}
-
+	speed = 0;
 	resetDrive();
 	wait1Msec(1000);
 
@@ -132,5 +131,9 @@ task autonomous()
 	motor[rightLift2] = 0;
 	resetLiftEnc();
 
+	gyroTurningActive = false;
+
+	stopTask(Gyro_Drive);
+	stopTask(Set_Drive);
 	stopTask(autonomous);
 }

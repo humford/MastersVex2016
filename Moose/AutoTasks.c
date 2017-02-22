@@ -36,6 +36,51 @@ task timeout(){
 	}
 }
 
+bool gyroTurningActive = false;
+float gyroTarget = 0, speed = 0;
+task gyro_Drive()
+{
+	float kp = 0.25, ki = 0.0, kd = 35;
+	float error = 0, last_error = 0, integral = 0, derivative = 0, power = 0;
+	float time_step = 50;
+
+	float max_power = 70;
+	float integral_max_power = 30;
+	float integral_window = 100;
+
+	while(true)
+	{
+		if(gyroTurningActive)
+		{
+			last_error = error;
+			error = gyroTarget - SensorValue[in8];
+			derivative = (error - last_error)/time_step;
+
+			if(abs(error) < integral_window)integral += error * time_step;
+			else integral = 0;
+
+			if(integral * ki > integral_max_power) integral = integral_max_power / ki;
+			if(integral * ki < - integral_max_power) integral = - integral_max_power / ki;
+
+			power = kp*error + ki * integral + kd * derivative;
+
+			if(power > max_power) power = max_power;
+			if(power < - max_power) power = - max_power;
+
+			DrivePower(speed - power, speed + power);
+		}
+		else
+		{
+			error = 0;
+			last_error = 0;
+			integral = 0;
+			derivative = 0;
+			power = 0;
+		}
+		wait1Msec(time_step);
+	}
+}
+
 void move(int speed, int dir){
 	// dir == 1 forward
 	// dir == -1 backwards
