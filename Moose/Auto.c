@@ -27,14 +27,15 @@ task autonomous()
 	startTask(timeout);
 
 	//Forward 27 inches
-	move(780, 60, false);
+	move(500, 80, false);
 
 	//CCW Turn 90 Degrees
-	gyroTarget = -600;
-	wait1Msec(2000);
+	gyroTarget = 650;
+	wait1Msec(500);
 
 	//Forward 17 inches
-	move(580, 60, false);
+	resetEnc();
+	move(575, 80, false);
 
 	//Grab cube
 	while (SensorValue[grabberEncoder] > grabber(0, 1)) {
@@ -44,14 +45,14 @@ task autonomous()
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
 	resetEnc();
-	wait1Msec(300);
+	wait1Msec(200);
 
 	//Backwards 17 inches
-	move(580, -60, true);
+	move(625, -80, true);
 
 	//CCW Turn Degrees
-	gyroTarget = -850;
-	while (abs(SensorValue[in8]) < 850){
+	gyroTarget = 1300;
+	while (abs(SensorValue[in8]) < 1300){
 		checkGrip(1);
 		if (SensorValue[leftLiftEncoder] < 20){
 			motor[leftLift] = -90;
@@ -66,29 +67,21 @@ task autonomous()
 		}
 	}
 	resetEnc();
-	wait1Msec(400);
+	wait1Msec(200);
 
-	while (liftSimple(145) == false) {
-		speed = -40;
+	while (liftSimple(-145) == false) {
+		speed = -80;
 		checkGrip(1);
 	}
 	speed = 0;
+	motor[leftLift] = 0;
+	motor[leftLift2] = 0;
+	motor[rightLift] = 0;
+	motor[rightLift2] = 0;
 	resetDrive();
-	wait1Msec(1000);
 
 	//Drop cube
 	while (SensorValue[grabberEncoder] < -700) {
-		if (SensorValue[leftLiftEncoder] < 145){
-			motor[leftLift] = -90;
-			motor[leftLift2] = -90;
-			motor[rightLift] = -90;
-			motor[rightLift2] = -90;
-		} else {
-			motor[leftLift] = 90;
-			motor[leftLift2] = 90;
-			motor[rightLift] = 90;
-			motor[rightLift2] = 90;
-		}
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}

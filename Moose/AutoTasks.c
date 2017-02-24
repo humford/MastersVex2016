@@ -117,7 +117,7 @@ void checkGrip(int type){
 	}
 	//type == 1 Cube
 	if (type == 1){
-		target = -870;
+		target = -1150;
 	}
 
 	if(SensorValue[grabberEncoder] > target) {
@@ -180,15 +180,15 @@ void turn(int speed, int dir){
 // }
 
 bool liftSimple(int target){
-	int correction = target - SensorValue[leftLiftEncoder];
-	if (SensorValue[leftLiftEncoder] < target) {
+	int correction = abs(target) - abs(SensorValue[leftLiftEncoder]);
+	if (abs(SensorValue[leftLiftEncoder]) < abs(target)) {
 		motor[leftLift] = -1*(correction*correction);
 		motor[leftLift2] = -1*(correction*correction);
 		motor[rightLift] = -1*(correction*correction);
 		motor[rightLift2] = -1*(correction*correction);
 		return false;
 	}
-	if (SensorValue[leftLiftEncoder] > target) {
+	if (abs(SensorValue[leftLiftEncoder]) > abs(target)) {
 		motor[leftLift] = correction*correction;
 		motor[leftLift2] = correction*correction;
 		motor[rightLift] = correction*correction;
@@ -210,7 +210,7 @@ int grabber(int action, int type){
 		}
 		//type == 1 Cube
 		if (type == 1){
-			target = -800;
+			target = -1150;
 		}
 	}
 	//Drop
