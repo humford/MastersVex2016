@@ -81,36 +81,6 @@ task Gyro_Drive()
 	}
 }
 
-void move(int dist, int s, bool cube){
-	while (abs(SensorValue[leftDriveEncoder]) <= dist){
-		speed = s;
-		if cube {
-			checkGrip(1);
-		}
-	}
-	speed = 0;
-	resetEnc();
-	wait1Msec(300);
-}
-
-void brake(int speed, int dir){
-	// dir == 1 CCW
-	// dir == -1 CW
-	motor[leftDrive] = speed*(-dir);
-	motor[leftDrive2] = speed*(-dir);
-	motor[rightDrive] = speed*dir;
-	motor[rightDrive2] = speed*dir;
-}
-
-void turn(int speed, int dir){
-	// dir == 1 CCW
-	// dir == -1 CW
-	motor[leftDrive] = speed*(-dir);
-	motor[leftDrive2] = speed*(-dir);
-	motor[rightDrive] = speed*dir;
-	motor[rightDrive2] = speed*dir;
-}
-
 void resetDrive (){
 	motor[leftDrive] = 0;
 	motor[leftDrive2] = 0;
@@ -158,6 +128,38 @@ void checkGrip(int type){
 		motor[rightGrabber] = 0;
 	}
 }
+
+void move(int dist, int s, bool cube){
+	while (abs(SensorValue[leftDriveEncoder]) <= dist){
+		speed = s;
+		if (cube) {
+			checkGrip(1);
+		}
+	}
+	speed = 0;
+	resetEnc();
+	wait1Msec(300);
+}
+
+/*
+void brake(int speed, int dir){
+	// dir == 1 CCW
+	// dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
+}
+
+void turn(int speed, int dir){
+	// dir == 1 CCW
+	// dir == -1 CW
+	motor[leftDrive] = speed*(-dir);
+	motor[leftDrive2] = speed*(-dir);
+	motor[rightDrive] = speed*dir;
+	motor[rightDrive2] = speed*dir;
+}
+*/
 
 // void liftComp(int target){
 // 	int correction = target - SensorValue[leftliftEncoder];
