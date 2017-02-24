@@ -18,29 +18,24 @@
 
 task autonomous()
 {
+	startTask(Set_Drive);
+	startTask(Gyro_Drive);
+
+	gyroTurningActive = true;
+
 	clearTimer(T1);
 	startTask(timeout);
 
 	//Forward 27 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 780){
-		move(60, 1);
-	}
-	resetDrive();
+	move(500, 80, false);
 
 	//CCW Turn 90 Degrees
-	while (abs(SensorValue[in8]) < 600){
-		turn(60, 1);
-	}
-	brake(30, -1);
-	resetDrive();
-	resetEnc();
-	wait1Msec(300);
+	gyroTarget = 650;
+	wait1Msec(500);
 
 	//Forward 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 580){
-		move(60, 1);
-	}
-	resetDrive();
+	resetEnc();
+	move(575, 80, false);
 
 	//Grab cube
 	while (SensorValue[grabberEncoder] > grabber(0, 1)) {
@@ -49,24 +44,15 @@ task autonomous()
 	}
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
-
-	resetDrive();
 	resetEnc();
-	wait1Msec(300);
+	wait1Msec(200);
 
 	//Backwards 17 inches
-	while (abs(SensorValue[leftDriveEncoder]) <= 580) {
-		move(60, -1);
-		checkGrip(1);
-	}
-	resetDrive();
-	resetEnc();
-	wait1Msec(300);
+	move(625, -80, true);
 
-	int turnTarget = (abs(SensorValue[in8])+250);
-	//CCW Turn 90 Degrees
-	while (abs(SensorValue[in8]) < turnTarget){
-		turn(70, 1);
+	//CCW Turn Degrees
+	gyroTarget = 1300;
+	while (abs(SensorValue[in8]) < 1300){
 		checkGrip(1);
 		if (SensorValue[leftLiftEncoder] < 20){
 			motor[leftLift] = -90;
@@ -80,32 +66,22 @@ task autonomous()
 			motor[rightLift2] = 0;
 		}
 	}
-	brake(30, -1);
-	resetDrive();
 	resetEnc();
-	wait1Msec(400);
+	wait1Msec(200);
 
-	while (liftSimple(145) == false) {
-		move(40, -1);
+	while (liftSimple(-145) == false) {
+		speed = -80;
 		checkGrip(1);
 	}
-
+	speed = 0;
+	motor[leftLift] = 0;
+	motor[leftLift2] = 0;
+	motor[rightLift] = 0;
+	motor[rightLift2] = 0;
 	resetDrive();
-	wait1Msec(1000);
 
 	//Drop cube
 	while (SensorValue[grabberEncoder] < -700) {
-		if (SensorValue[leftLiftEncoder] < 145){
-			motor[leftLift] = -90;
-			motor[leftLift2] = -90;
-			motor[rightLift] = -90;
-			motor[rightLift2] = -90;
-		} else {
-			motor[leftLift] = 90;
-			motor[leftLift2] = 90;
-			motor[rightLift] = 90;
-			motor[rightLift2] = 90;
-		}
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}
@@ -132,5 +108,9 @@ task autonomous()
 	motor[rightLift2] = 0;
 	resetLiftEnc();
 
+	gyroTurningActive = false;
+
+	stopTask(Gyro_Drive);
+	stopTask(Set_Drive);
 	stopTask(autonomous);
 }

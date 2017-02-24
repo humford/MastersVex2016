@@ -61,5 +61,10 @@ task usercontrol()
     motor[leftLift2] = liftLeftSpeed;
 
     DrivePower(vexRT[Ch3] + vexRT[Ch1], vexRT[Ch3] - vexRT[Ch1]);
+
+    if (vexRT[Btn8D] == 1) {
+    	startTask(autonomous);
+  	}
+
    }
 }

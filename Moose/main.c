@@ -1,16 +1,17 @@
+#pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, dgtl5,  rightLiftEncoder, sensorQuadEncoder)
 #pragma config(Sensor, dgtl7,  leftLiftEncoder, sensorQuadEncoder)
-#pragma config(Sensor, dgtl11, grabberEncoder, sensorQuadEncoder)
 #pragma config(Sensor, I2C_1,  leftDriveEncoder, sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  rightDriveEncoder, sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  grabberEncoder, sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           rightDrive2,   tmotorVex393HighSpeed_HBridge, openLoop, reversed, encoderPort, I2C_2)
-#pragma config(Motor,  port2,           leftDrive,     tmotorVex393HighSpeed_MC29, openLoop, encoderPort, I2C_2)
-#pragma config(Motor,  port3,           rightDrive,    tmotorVex393HighSpeed_MC29, openLoop, reversed, encoderPort, I2C_1)
+#pragma config(Motor,  port2,           leftDrive,     tmotorVex393HighSpeed_MC29, openLoop)
+#pragma config(Motor,  port3,           rightDrive,    tmotorVex393HighSpeed_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           rightLift,     tmotorVex393_MC29, openLoop, reversed, encoderPort, dgtl5)
 #pragma config(Motor,  port5,           leftLift,      tmotorVex393_MC29, openLoop, encoderPort, dgtl7)
-#pragma config(Motor,  port6,           rightGrabber,  tmotorVex393_MC29, openLoop, encoderPort, dgtl11)
-#pragma config(Motor,  port7,           leftGrabber,   tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port6,           rightGrabber,  tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           leftGrabber,   tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_3)
 #pragma config(Motor,  port8,           rightLift2,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port9,           leftLift2,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port10,          leftDrive2,    tmotorVex393HighSpeed_HBridge, openLoop, encoderPort, I2C_1)
@@ -71,23 +72,23 @@ float rightTarget = 0;
 ///////////////////////////////////////////////////BEGIN PREAUTONOMOUS
 void pre_auton()
 {
-  // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
-  // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
-  bStopTasksBetweenModes = true;
+	// Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
+	// Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
+	bStopTasksBetweenModes = true;
 
 	//Reconfigure Analog Port 8 as a Gyro sensor and allow time for ROBOTC to calibrate it
 	SensorType[in8] = sensorNone;
-  wait1Msec(1000);
-  SensorType[in8] = sensorGyro;
-  wait1Msec(2000);
+	wait1Msec(1000);
+	SensorType[in8] = sensorGyro;
+	wait1Msec(2000);
 
-  //Reset sensor
+	//Reset sensor
 	SensorValue[in8] = 0;
 	wait1Msec(1000);
 
-  //Reset lift encoders
-  SensorValue[leftLiftEncoder] = 0;
-  SensorValue[rightLiftEncoder] = 0;
+	//Reset lift encoders
+	SensorValue[leftLiftEncoder] = 0;
+	SensorValue[rightLiftEncoder] = 0;
 
 	// startTask(gyro_Drive);
 }
