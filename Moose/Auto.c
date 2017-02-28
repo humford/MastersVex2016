@@ -85,28 +85,92 @@ task autonomous()
 		motor[leftGrabber] = -127;
 		motor[rightGrabber] = -127;
 	}
-
-	motor[leftGrabber] = 50;
-	motor[rightGrabber] = 50;
-	motor[leftLift] = 90;
-	motor[leftLift2] = 90;
-	motor[rightLift] = 90;
-	motor[rightLift2] = 90;
-	wait1Msec(200);
 	motor[leftGrabber] = 0;
 	motor[rightGrabber] = 0;
-	motor[leftLift] = 40;
-	motor[leftLift2] = 40;
-	motor[rightLift] = 40;
-	motor[rightLift2] = 40;
+	wait1Msec(400);
 
-	resetGrabber();
-	wait1Msec(2500);
+	while (SensorValue[leftLiftEncoder] < -20) {
+		motor[leftLift] = 127;
+		motor[leftLift2] = 127;
+		motor[rightLift] = 127;
+		motor[rightLift2] = 127;
+		checkGrip(1);
+	}
 	motor[leftLift] = 0;
 	motor[leftLift2] = 0;
 	motor[rightLift] = 0;
 	motor[rightLift2] = 0;
-	resetLiftEnc();
+
+	//Drop cube
+	while (SensorValue[grabberEncoder] < -900) {
+		motor[leftGrabber] = -127;
+		motor[rightGrabber] = -127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+
+	//CCW Turn 90 Degrees
+	gyroTarget = 1100;
+	wait1Msec(500);
+
+	resetEnc();
+	move(900, 1000, false);
+
+	//Grab cube
+	while (SensorValue[grabberEncoder] > grabber(0, 1)) {
+			motor[leftGrabber] = 127;
+			motor[rightGrabber] = 127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+	resetEnc();
+	wait1Msec(200);
+
+	//CCW Turn 90 Degrees
+	gyroTarget = 1300;
+	wait1Msec(500);
+
+	resetEnc();
+	move(1000, -100, true);
+
+	while (liftSimple(-145) == false) {
+		checkGrip(1);
+	}
+	speed = 0;
+	motor[leftLift] = 0;
+	motor[leftLift2] = 0;
+	motor[rightLift] = 0;
+	motor[rightLift2] = 0;
+
+	//Drop cube
+	while (SensorValue[grabberEncoder] < -700) {
+		motor[leftGrabber] = -127;
+		motor[rightGrabber] = -127;
+	}
+	motor[leftGrabber] = 0;
+	motor[rightGrabber] = 0;
+
+	//motor[leftGrabber] = 50;
+	//motor[rightGrabber] = 50;
+	//motor[leftLift] = 90;
+	//motor[leftLift2] = 90;
+	//motor[rightLift] = 90;
+	//motor[rightLift2] = 90;
+	//wait1Msec(200);
+	//motor[leftGrabber] = 0;
+	//motor[rightGrabber] = 0;
+	//motor[leftLift] = 40;
+	//motor[leftLift2] = 40;
+	//motor[rightLift] = 40;
+	//motor[rightLift2] = 40;
+
+	//resetGrabber();
+	//wait1Msec(2500);
+	//motor[leftLift] = 0;
+	//motor[leftLift2] = 0;
+	//motor[rightLift] = 0;
+	//motor[rightLift2] = 0;
+	//resetLiftEnc();
 
 	gyroTurningActive = false;
 
