@@ -20,7 +20,6 @@ task timeout(){
 	while(true){
 		if (time1(T1) > 14000){ // 14 seconds
 			stopTask(autonomous);
-			stopAllTasks();
 			motor[leftDrive] = 0;
 			motor[leftDrive2] = 0;
 			motor[rightDrive] = 0;
@@ -57,7 +56,7 @@ task Gyro_Drive()
 			error = gyroTarget - SensorValue[in8];
 			derivative = (error - last_error)/time_step;
 
-			if(fabs(error) < integral_window)integral += error * time_step;
+			if(abs(error) < integral_window)integral += error * time_step;
 			else integral = 0;
 
 			if(integral * ki > integral_max_power) integral = integral_max_power / ki;
@@ -118,11 +117,7 @@ void checkGrip(int type){
 	}
 	//type == 1 Cube
 	if (type == 1){
-		target = -1100;
-	}
-	//type == 2 Star + cube
-	if (type == 2){
-		target = -1050;
+		target = -1150;
 	}
 
 	if(SensorValue[grabberEncoder] > target) {
@@ -215,11 +210,7 @@ int grabber(int action, int type){
 		}
 		//type == 1 Cube
 		if (type == 1){
-			target = -1100;
-		}
-		//type == 2 Star + cube
-		if (type == 2){
-			target = -1050;
+			target = -1150;
 		}
 	}
 	//Drop
