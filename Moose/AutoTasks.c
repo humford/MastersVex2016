@@ -200,7 +200,7 @@ bool liftSimple(int target){
 
 //Action 0 = pick up
 //Action 1 = drop
-int grabber(int action, int type){
+int grabber(int action, int type, int timeout){
 	int target;
 	//Pick up
 	if (action == 0) {
